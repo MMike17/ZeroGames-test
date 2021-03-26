@@ -6,6 +6,7 @@ public class GameManager : MonoBehaviour
 	[Header("Scene references - Managers")]
 	public ZonesManager zonesManager;
 	public PlayerInterfaceManager playerInterface;
+	public RecipePuppyConnector recipePuppy;
 	public RecipeSearchUI recipeSearchUI;
 
 	[Header("Scene references - Uniques")]
@@ -22,7 +23,8 @@ public class GameManager : MonoBehaviour
 			playerInterface.HideZonePrompt
 		);
 		playerInterface.Init();
-		// recipeSearchUI.Init();
+		recipePuppy.Init(recipeSearchUI.SetRecipes);
+		recipeSearchUI.Init(recipePuppy.StartRecipeRequest);
 
 		// Uniques
 		mainCamera.Init(player.transform, player.SetPlayerDestination);

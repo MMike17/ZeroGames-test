@@ -19,7 +19,7 @@ public class RecipeSearchUI : BaseBehaviour
 	public IngredientBubble ingredientPrefab;
 	public List<RecipeDisplay> recipeDisplays;
 
-	List<string> providedIngredients;
+	public List<string> providedIngredients;
 	Action<string, string[], int> StartWebSearch;
 	int currentPage;
 
@@ -30,6 +30,7 @@ public class RecipeSearchUI : BaseBehaviour
 		providedIngredients = new List<string>();
 		currentPage = 1;
 
+		recipeDisplays.ForEach(item => item.gameObject.SetActive(false));
 		previousPageButton.interactable = false;
 
 		previousPageButton.onClick.AddListener(() =>

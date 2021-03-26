@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class IngredientBubble : BaseBehaviour
 {
 	[Header("Scene references - UI")]
-	TextMeshProUGUI ingredientName;
+	public TextMeshProUGUI ingredientName;
 	public Button deleteButton;
 
 	public void Init(Action OnIngredientDelete, string ingredient)

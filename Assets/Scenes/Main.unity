@@ -416,6 +416,53 @@ MonoBehaviour:
   zoneTitleText: {fileID: 1553858146}
   zonePromptText: {fileID: 1355880646}
   zonePromptButton: {fileID: 1077882979}
+--- !u!1 &28452536
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 28452537}
+  - component: {fileID: 28452538}
+  m_Layer: 0
+  m_Name: RecipePuppyConnector
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &28452537
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 28452536}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1274683977}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &28452538
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 28452536}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01cf3872ed0baab4c9f00a558485c5cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseUrl: http://www.recipepuppy.com/api/?
+  keywordPrefix: q=
+  ingredientsPrefix: i=
+  pagePrefix: p=
 --- !u!1 &66320845
 GameObject:
   m_ObjectHideFlags: 0
@@ -7108,6 +7155,7 @@ Transform:
   m_Children:
   - {fileID: 2111310218}
   - {fileID: 26156200}
+  - {fileID: 28452537}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -7125,7 +7173,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   zonesManager: {fileID: 2111310219}
   playerInterface: {fileID: 26156201}
-  recipeSearchUI: {fileID: 0}
+  recipePuppy: {fileID: 28452538}
+  recipeSearchUI: {fileID: 87378942}
   mainCamera: {fileID: 963194229}
   player: {fileID: 1393112209}
 --- !u!1 &1338203981
