@@ -28,4 +28,20 @@ public class PlayerBehaviour : BaseBehaviour
 		else
 			Debug.LogWarning(debugTag + "Couldn't find NavMesh point close to target position within distance");
 	}
+
+	void OnTriggerEnter(Collider collider)
+	{
+		IInterractableZone detectedZone = collider.GetComponent<IInterractableZone>();
+
+		if(detectedZone != null)
+			detectedZone.OnZoneEntered();
+	}
+
+	void OnTriggerExit(Collider collider)
+	{
+		IInterractableZone detectedZone = collider.GetComponent<IInterractableZone>();
+
+		if(detectedZone != null)
+			detectedZone.OnZoneExit();
+	}
 }
