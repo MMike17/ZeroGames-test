@@ -6,6 +6,7 @@ public class CameraBehaviour : BaseBehaviour
 {
 	[Header("Settings")]
 	public float cameraSpeed;
+	public float fallOffDistanceThreshold;
 
 	Camera mainCamera;
 	Transform target;
@@ -31,6 +32,13 @@ public class CameraBehaviour : BaseBehaviour
 
 	void FollowTarget()
 	{
-		transform.position = Vector3.MoveTowards(transform.position, target.position + targetOffset, cameraSpeed * Time.deltaTime);
+		Vector3 targetPos = target.position + targetOffset;
+		float targetDistance = Vector3.Distance(transform.position, targetPos);
+		float currentCameraSpeed = cameraSpeed;
+
+		if(targetDistance <= fallOffDistanceThreshold)
+			currentCameraSpeed *= targetDistance / fallOffDistanceThreshold;
+
+		transform.position = Vector3.MoveTowards(transform.position, target.position + targetOffset, currentCameraSpeed * Time.deltaTime);
 	}
 }
