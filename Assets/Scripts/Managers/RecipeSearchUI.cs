@@ -6,13 +6,18 @@ using UnityEngine.UI;
 
 public class RecipeSearchUI : BaseBehaviour
 {
+	[Header("Settings")]
+	public float spinnerSpeed;
+
 	[Header("Scene references - UI")]
 	public TMP_InputField titleKeywordInputField;
 	public TMP_InputField ingredientInputField;
-	public Button startSearchButton;
-	public Transform ingredientsList, recipesList;
+	public TextMeshProUGUI pageNumberText;
+	public Button startSearchButton, previousPageButton, nextPageButton;
+	public Transform ingredientsList, spinner;
+	public GameObject spinnerPanel;
 	public IngredientBubble ingredientPrefab;
-	public RecipeDisplay recipePrefab;
+	public List<RecipeDisplay> recipeDisplays;
 
 	List<string> providedIngredients;
 	Action<string, string[], int> StartWebSearch;
@@ -23,7 +28,29 @@ public class RecipeSearchUI : BaseBehaviour
 		StartWebSearch = startSearch;
 
 		providedIngredients = new List<string>();
-		currentPage = 0;
+		currentPage = 1;
+
+		previousPageButton.interactable = false;
+
+		previousPageButton.onClick.AddListener(() =>
+		{
+			currentPage--;
+			StartSearch();
+
+			previousPageButton.interactable = currentPage > 1;
+
+			pageNumberText.text = currentPage.ToString();
+			StartSpinner();
+		});
+
+		nextPageButton.onClick.AddListener(() =>
+		{
+			currentPage++;
+			StartSearch();
+
+			pageNumberText.text = currentPage.ToString();
+			StartSpinner();
+		});
 
 		ingredientInputField.onSubmit.AddListener((ingredient) => SpawnIngredient(ingredient));
 		startSearchButton.onClick.AddListener(() => StartSearch());
@@ -31,14 +58,33 @@ public class RecipeSearchUI : BaseBehaviour
 		InitInternal();
 	}
 
-	public void SpawnRecipe(Recipe recipe)
+	public void SetRecipes(Recipe[] recipes)
 	{
-		RecipeDisplay recipeUI = Instantiate(recipePrefab, recipesList);
-		recipeUI.Init(recipe);
+		for (int i = 0; i < recipeDisplays.Count; i++)
+		{
+			if(i < recipes.Length)
+			{
+				recipeDisplays[i].gameObject.SetActive(true);
+				recipeDisplays[i].Init(recipes[i]);
+			}
+			else
+				recipeDisplays[i].gameObject.SetActive(false);
+		}
+
+		StopSpinner();
+	}
+
+	void Update()
+	{
+		if(spinnerPanel.activeInHierarchy)
+			spinner.Rotate(0, 0, spinnerSpeed * Time.deltaTime);
 	}
 
 	void SpawnIngredient(string ingredient)
 	{
+		if(string.IsNullOrEmpty(ingredient))
+			return;
+
 		providedIngredients.Add(ingredient);
 
 		IngredientBubble bubble = Instantiate(ingredientPrefab, ingredientsList);
@@ -53,5 +99,15 @@ public class RecipeSearchUI : BaseBehaviour
 			return;
 
 		StartWebSearch(titleKeywordInputField.text, providedIngredients.ToArray(), currentPage);
+	}
+
+	void StartSpinner()
+	{
+		spinnerPanel.SetActive(true);
+	}
+
+	void StopSpinner()
+	{
+		spinnerPanel.SetActive(false);
 	}
 }
