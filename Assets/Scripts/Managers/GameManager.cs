@@ -5,10 +5,11 @@ public class GameManager : MonoBehaviour
 {
 	[Header("Scene references - Uniques")]
 	public CameraBehaviour mainCamera;
-	public Transform player;
+	public PlayerBehaviour player;
 
 	void Awake()
 	{
-		mainCamera.Init(player);
+		mainCamera.Init(player.transform, player.SetPlayerDestination);
+		player.Init();
 	}
 }

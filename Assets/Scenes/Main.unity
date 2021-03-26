@@ -122,7 +122,7 @@ NavMeshSettings:
     preserveTilesOutsideBounds: 0
     debug:
       m_Flags: 0
-  m_NavMeshData: {fileID: 23800000, guid: 122c43b771d52e84095e330367411491, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: 4a60b458ac8b9e2478c8991e74305a84, type: 2}
 --- !u!1 &668934639
 GameObject:
   m_ObjectHideFlags: 0
@@ -300,7 +300,7 @@ Camera:
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
-  orthographic: 1
+  orthographic: 0
   orthographic size: 5
   m_Depth: -1
   m_CullingMask:
@@ -324,13 +324,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0.31598538, y: -0.3596048, z: 0.13088542, w: 0.8681629}
-  m_LocalPosition: {x: 6, y: 7, z: -6}
+  m_LocalRotation: {x: 0.27781588, y: -0.36497167, z: 0.1150751, w: 0.8811196}
+  m_LocalPosition: {x: 7, y: 7, z: -7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 40, y: -45, z: 0}
+  m_LocalEulerAnglesHint: {x: 35, y: -45, z: 0}
 --- !u!114 &963194229
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -389,7 +389,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainCamera: {fileID: 963194229}
-  player: {fileID: 1393112204}
+  player: {fileID: 1393112209}
 --- !u!1 &1393112203
 GameObject:
   m_ObjectHideFlags: 0
@@ -402,6 +402,8 @@ GameObject:
   - component: {fileID: 1393112207}
   - component: {fileID: 1393112206}
   - component: {fileID: 1393112205}
+  - component: {fileID: 1393112208}
+  - component: {fileID: 1393112209}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -485,6 +487,41 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1393112203}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!195 &1393112208
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1393112203}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 1
+  m_BaseOffset: 0.5
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
+--- !u!114 &1393112209
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1393112203}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 297196c311c27c34987b417760c4700a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxNavDistanceThreshold: 1
 --- !u!1 &2115864572
 GameObject:
   m_ObjectHideFlags: 0

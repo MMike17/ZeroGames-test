@@ -10,13 +10,16 @@ public class CameraBehaviour : BaseBehaviour
 
 	Camera mainCamera;
 	Transform target;
+	Action<Vector3> SetPlayerDestination;
 	Vector3 targetOffset;
 
-	public void Init(Transform cameraTarget)
+	public void Init(Transform cameraTarget, Action<Vector3> setPlayerDestination)
 	{
 		mainCamera = GetComponent<Camera>();
 
 		target = cameraTarget;
+		SetPlayerDestination = setPlayerDestination;
+
 		targetOffset = transform.position - target.position;
 
 		InitInternal();
@@ -28,6 +31,7 @@ public class CameraBehaviour : BaseBehaviour
 			return;
 
 		FollowTarget();
+		PickPlayerDestination();
 	}
 
 	void FollowTarget()
@@ -40,5 +44,17 @@ public class CameraBehaviour : BaseBehaviour
 			currentCameraSpeed *= targetDistance / fallOffDistanceThreshold;
 
 		transform.position = Vector3.MoveTowards(transform.position, target.position + targetOffset, currentCameraSpeed * Time.deltaTime);
+	}
+
+	void PickPlayerDestination()
+	{
+		if(Input.GetMouseButtonDown(0))
+		{
+			RaycastHit hit;
+			if(Physics.Raycast(mainCamera.ScreenPointToRay(Input.mousePosition), out hit))
+				SetPlayerDestination(hit.point);
+			else
+				Debug.LogWarning(debugTag + "Mouse raycast didn't hit anything");
+		}
 	}
 }
