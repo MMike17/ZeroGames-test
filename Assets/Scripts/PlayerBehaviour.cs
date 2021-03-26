@@ -31,7 +31,7 @@ public class PlayerBehaviour : BaseBehaviour
 
 	void OnTriggerEnter(Collider collider)
 	{
-		Zone detectedZone = collider.GetComponent<Zone>();
+		IInterractableZone detectedZone = collider.GetComponent<IInterractableZone>();
 
 		if(detectedZone != null)
 			detectedZone.OnZoneEntered();
@@ -39,7 +39,7 @@ public class PlayerBehaviour : BaseBehaviour
 
 	void OnTriggerExit(Collider collider)
 	{
-		Zone detectedZone = collider.GetComponent<Zone>();
+		IInterractableZone detectedZone = collider.GetComponent<IInterractableZone>();
 
 		if(detectedZone != null)
 			detectedZone.OnZoneExit();

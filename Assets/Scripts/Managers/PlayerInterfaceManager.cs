@@ -1,11 +1,17 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerInterfaceManager : BaseBehaviour
 {
+	[Header("Settings")]
+	public string showMenuAnimationFormat;
+	public string hideMenuAnimationFormat;
+
 	[Header("Scene references - UI")]
 	public Animator canvasAnimator;
-	public TextMeshProUGUI zoneTitleUI;
+	public TextMeshProUGUI zoneTitleText, zonePromptText;
+	public Button zonePromptButton;
 
 	public void Init()
 	{
@@ -17,8 +23,8 @@ public class PlayerInterfaceManager : BaseBehaviour
 		if(!CheckInitialized())
 			return;
 
-		zoneTitleUI.text = title;
-		canvasAnimator.Play("ShowTitle");
+		zoneTitleText.text = title;
+		canvasAnimator.Play("ShowTitle", 0);
 	}
 
 	public void HideZoneTitle()
@@ -26,18 +32,28 @@ public class PlayerInterfaceManager : BaseBehaviour
 		if(!CheckInitialized())
 			return;
 
-		canvasAnimator.Play("HideTitle");
+		canvasAnimator.Play("HideTitle", 0);
 	}
 
-	public void ShowZoneMenu(string zoneAnimationTag)
+	public void ShowZonePrompt(string zoneAnimationTag, string buttonPrompt)
 	{
 		if(!CheckInitialized())
 			return;
+
+		zonePromptText.text = buttonPrompt;
+
+		zonePromptButton.onClick.AddListener(() => canvasAnimator.Play(string.Format(showMenuAnimationFormat, zoneAnimationTag), 2));
+
+		canvasAnimator.Play("ShowPrompt", 1);
 	}
 
-	public void HideZoneMenu(string zoneAnimationTag)
+	public void HideZonePrompt()
 	{
 		if(!CheckInitialized())
 			return;
+
+		zonePromptButton.onClick.RemoveAllListeners();
+
+		canvasAnimator.Play("HidePrompt", 1);
 	}
 }

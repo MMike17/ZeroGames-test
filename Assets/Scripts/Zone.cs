@@ -6,18 +6,19 @@ public class Zone : BaseBehaviour, IInterractableZone
 {
 	[Header("Settings")]
 	public string zoneTitle;
-	public string zoneAnimationTag;
+	public string zoneAnimationTag, zoneInterractionPrompt;
 
-	Action<string> ShowZoneTitle, ShowZoneMenu, HideZoneMenu;
-	Action HideZoneTitle;
+	Action<string, string> ShowZonePrompt;
+	Action<string> ShowZoneTitle;
+	Action HideZoneTitle, HideZonePrompt;
 	bool hasVisitor;
 
-	public void Init(Action<string> showZoneTitle, Action hideZoneTitle, Action<string> showZoneMenu, Action<string> hideZoneMenu)
+	public void Init(Action<string> showZoneTitle, Action hideZoneTitle, Action<string, string> showZonePrompt, Action hideZonePrompt)
 	{
 		ShowZoneTitle = showZoneTitle;
 		HideZoneTitle = hideZoneTitle;
-		ShowZoneMenu = showZoneMenu;
-		HideZoneMenu = hideZoneMenu;
+		ShowZonePrompt = showZonePrompt;
+		HideZonePrompt = hideZonePrompt;
 
 		hasVisitor = false;
 
@@ -30,6 +31,7 @@ public class Zone : BaseBehaviour, IInterractableZone
 			return;
 
 		ShowZoneTitle(zoneTitle);
+		ShowZonePrompt(zoneAnimationTag, zoneInterractionPrompt);
 		hasVisitor = true;
 	}
 
@@ -39,16 +41,7 @@ public class Zone : BaseBehaviour, IInterractableZone
 			return;
 
 		HideZoneTitle();
+		HideZonePrompt();
 		hasVisitor = false;
-	}
-
-	public void StartInterraction()
-	{
-		ShowZoneMenu(zoneAnimationTag);
-	}
-
-	public void StopInterraction()
-	{
-		HideZoneMenu(zoneAnimationTag);
 	}
 }

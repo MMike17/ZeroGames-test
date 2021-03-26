@@ -17,8 +17,8 @@ public class GameManager : MonoBehaviour
 		zonesManager.Init(
 			playerInterface.ShowZoneTitle,
 			playerInterface.HideZoneTitle,
-			playerInterface.ShowZoneMenu,
-			playerInterface.HideZoneMenu
+			playerInterface.ShowZonePrompt,
+			playerInterface.HideZonePrompt
 		);
 		playerInterface.Init();
 

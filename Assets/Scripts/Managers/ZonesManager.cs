@@ -5,10 +5,10 @@ public class ZonesManager : BaseBehaviour
 {
 	List<Zone> zones;
 
-	public void Init(Action<string> showZoneTitle, Action hideZoneTitle, Action<string> showZoneMenu, Action<string> hideZoneMenu)
+	public void Init(Action<string> showZoneTitle, Action hideZoneTitle, Action<string, string> showZonePrompt, Action hideZonePrompt)
 	{
 		zones = new List<Zone>(FindObjectsOfType<Zone>());
-		zones.ForEach(zone => zone.Init(showZoneTitle, hideZoneTitle, showZoneMenu, hideZoneMenu));
+		zones.ForEach(zone => zone.Init(showZoneTitle, hideZoneTitle, showZonePrompt, hideZonePrompt));
 
 		InitInternal();
 	}
