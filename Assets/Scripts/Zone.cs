@@ -2,12 +2,23 @@ using System;
 using UnityEngine;
 
 [RequireComponent(typeof(BoxCollider))]
-public class Zone : BaseBehaviour
+public class Zone : BaseBehaviour, IInterractableZone
 {
+	[Header("Settings")]
+	public string zoneTitle;
+	public string zoneAnimationTag;
+
+	Action<string> ShowZoneTitle, ShowZoneMenu, HideZoneMenu;
+	Action HideZoneTitle;
 	bool hasVisitor;
 
-	public void Init()
+	public void Init(Action<string> showZoneTitle, Action hideZoneTitle, Action<string> showZoneMenu, Action<string> hideZoneMenu)
 	{
+		ShowZoneTitle = showZoneTitle;
+		HideZoneTitle = hideZoneTitle;
+		ShowZoneMenu = showZoneMenu;
+		HideZoneMenu = hideZoneMenu;
+
 		hasVisitor = false;
 
 		InitInternal();
@@ -18,8 +29,7 @@ public class Zone : BaseBehaviour
 		if(!CheckInitialized())
 			return;
 
-		Debug.Log(debugTag + "Player entered zone");
-
+		ShowZoneTitle(zoneTitle);
 		hasVisitor = true;
 	}
 
@@ -28,8 +38,17 @@ public class Zone : BaseBehaviour
 		if(!CheckInitialized())
 			return;
 
-		Debug.Log(debugTag + "Player exited zone");
-
+		HideZoneTitle();
 		hasVisitor = false;
+	}
+
+	public void StartInterraction()
+	{
+		ShowZoneMenu(zoneAnimationTag);
+	}
+
+	public void StopInterraction()
+	{
+		HideZoneMenu(zoneAnimationTag);
 	}
 }

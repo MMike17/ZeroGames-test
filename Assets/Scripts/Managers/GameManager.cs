@@ -5,6 +5,7 @@ public class GameManager : MonoBehaviour
 {
 	[Header("Scene references - Managers")]
 	public ZonesManager zonesManager;
+	public PlayerInterfaceManager playerInterface;
 
 	[Header("Scene references - Uniques")]
 	public CameraBehaviour mainCamera;
@@ -13,7 +14,13 @@ public class GameManager : MonoBehaviour
 	void Awake()
 	{
 		// Managers
-		zonesManager.Init();
+		zonesManager.Init(
+			playerInterface.ShowZoneTitle,
+			playerInterface.HideZoneTitle,
+			playerInterface.ShowZoneMenu,
+			playerInterface.HideZoneMenu
+		);
+		playerInterface.Init();
 
 		// Uniques
 		mainCamera.Init(player.transform, player.SetPlayerDestination);
