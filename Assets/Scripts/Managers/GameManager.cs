@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
 
 	void Awake()
 	{
-		mainCamera.Init(player.transform);
+		mainCamera.Init(player.transform, player.SetPlayerDestination);
 		player.Init();
 	}
 }
