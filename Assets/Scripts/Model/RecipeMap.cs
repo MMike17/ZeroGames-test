@@ -1,6 +1,6 @@
 using System;
 
-/// <summary>Class used to model recipes retrieved from Recipe Puppy</summary>
+/// <summary>Model of recipes retrieved from RecipePuppy</summary>
 [Serializable]
 public class RecipeMap
 {

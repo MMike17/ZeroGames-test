@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.AI;
 
+/// <summary>Class used to move player around</summary>
 [RequireComponent(typeof(NavMeshAgent))]
 public class PlayerBehaviour : BaseBehaviour
 {

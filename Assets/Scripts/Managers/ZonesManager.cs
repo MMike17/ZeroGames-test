@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 
+/// <summary>Class used to initialize and manage Zones objects</summary>
 public class ZonesManager : BaseBehaviour
 {
 	List<Zone> zones;

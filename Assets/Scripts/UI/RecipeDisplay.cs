@@ -2,6 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>Class used to display recipes</summary>
 public class RecipeDisplay : BaseBehaviour
 {
 	[Header("Scene references - UI")]

@@ -1,6 +1,6 @@
 using UnityEngine.EventSystems;
 
-// modified StandaloneInputModule so that we can retrieve the hovered game objects
+/// <summary>Modified StandaloneInputModule so that we can retrieve the hovered game objects</summary>
 public class ActuallyUsefulInputModule : StandaloneInputModule
 {
 	public static ActuallyUsefulInputModule Get;

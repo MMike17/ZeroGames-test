@@ -1,4 +1,4 @@
-/// <summary>Class used to easely convert API Json into usable data</summary>
+/// <summary>Class used to easely convert API Json results into usable data (for convenience)</summary>
 public class RecipePuppyResultMap
 {
 	public string title;
