@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 
+/// <summary>Class used to setup zones and link them to their respective interface panels</summary>
 [RequireComponent(typeof(BoxCollider))]
 public class Zone : BaseBehaviour, IInterractableZone
 {

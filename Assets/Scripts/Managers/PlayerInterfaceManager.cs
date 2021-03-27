@@ -2,6 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>Class used to controll the player interface and transitions between panels</summary>
 public class PlayerInterfaceManager : BaseBehaviour
 {
 	[Header("Settings")]

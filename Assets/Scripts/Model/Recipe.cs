@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 
+/// <summary>Model of recipes used for display</summary>
 public class Recipe
 {
 	public string title;

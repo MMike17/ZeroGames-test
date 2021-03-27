@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>Class used for interractions with the recipe search panel</summary>
 public class RecipeSearchUI : BaseBehaviour
 {
 	[Header("Settings")]

@@ -52,7 +52,23 @@ public class CameraBehaviour : BaseBehaviour
 		{
 			RaycastHit hit;
 			if(Physics.Raycast(mainCamera.ScreenPointToRay(Input.mousePosition), out hit))
-				SetPlayerDestination(hit.point);
+			{
+				// check if there is an object hit by raycast that is UI
+				GameObject[] hoveredObjects = ActuallyUsefulInputModule.GetPointerEventData().hovered.ToArray();
+				bool hitsUI = false;
+
+				foreach (GameObject hovered in hoveredObjects)
+				{
+					if(hovered.activeSelf && hovered.GetComponent<RectTransform>() != null)
+					{
+						hitsUI = true;
+						break;
+					}
+				}
+
+				if(!hitsUI)
+					SetPlayerDestination(hit.point);
+			}
 			else
 				Debug.LogWarning(debugTag + "Mouse raycast didn't hit anything");
 		}
