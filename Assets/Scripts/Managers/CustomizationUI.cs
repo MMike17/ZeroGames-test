@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,11 +11,15 @@ public class CustomizationUI : BaseBehaviour
 	public Button exitPanelButton, newProfileCreateButton;
 	public Image selectedProfileColorImage;
 	public TextMeshProUGUI selectedProfileNameText, selectedProfileHatText, selectedProfileGadgetText, selectedProfileHatPositionText, selectedProfileGadgetPositionText, selectedProfileColorPositionText;
+	public Transform profilesList;
+	public CustomizationProfileTicket profileTicketprefab;
 
+	List<CustomizationProfileTicket> spawnedProfileTickets;
 	int selectedProfile;
 
 	public void Init()
 	{
+		spawnedProfileTickets = new List<CustomizationProfileTicket>();
 		selectedProfile = 0;
 
 		newProfileCreateButton.onClick.AddListener(() =>
@@ -24,6 +29,14 @@ public class CustomizationUI : BaseBehaviour
 		});
 
 		InitInternal();
+	}
+
+	void SpawnProfileTicket()
+	{
+		CustomizationProfileTicket profileTicket = Instantiate(profileTicketprefab, profilesList);
+		// profileTicket.Init();
+
+		spawnedProfileTickets.Add(profileTicket);
 	}
 
 	void CreateCustomizationProfile()
