@@ -3,6 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>Class used to load or delete customization profiles</summary>
 public class CustomizationProfileTicket : BaseBehaviour
 {
 	[Header("Scene references - UI")]
@@ -10,20 +11,22 @@ public class CustomizationProfileTicket : BaseBehaviour
 	public Button loadProfileButton, deleteProfileButton;
 	public Image selectedStateImage;
 
-	public void Init(Action LoadProfile, Action DeleteProfile)
+	public bool isSelected => selectedStateImage.enabled;
+
+	public void Init(CustomizationProfile profile, Action<CustomizationProfile> LoadProfile, Action<CustomizationProfile, CustomizationProfileTicket> DeleteProfile)
 	{
 		selectedStateImage.enabled = false;
-		// profileNameText.text = ;
+		profileNameText.text = profile.name;
 
 		loadProfileButton.onClick.AddListener(() =>
 		{
 			selectedStateImage.enabled = true;
-			LoadProfile();
+			LoadProfile(profile);
 		});
 
 		deleteProfileButton.onClick.AddListener(() =>
 		{
-			DeleteProfile();
+			DeleteProfile(profile, this);
 			Destroy(gameObject);
 		});
 
