@@ -13,15 +13,18 @@ public class CustomizationProfileTicket : BaseBehaviour
 
 	public bool isSelected => selectedStateImage.enabled;
 
-	public void Init(CustomizationProfile profile, Action<CustomizationProfile> LoadProfile, Action<CustomizationProfile, CustomizationProfileTicket> DeleteProfile)
+	CustomizationProfile profile;
+
+	public void Init(CustomizationProfile profile, Action<CustomizationProfile> LoadProfile, Action<CustomizationProfile, CustomizationProfileTicket> DeleteProfile, bool isInitialSelected)
 	{
-		selectedStateImage.enabled = false;
+		selectedStateImage.enabled = isInitialSelected;
 		profileNameText.text = profile.name;
+		this.profile = profile;
 
 		loadProfileButton.onClick.AddListener(() =>
 		{
-			selectedStateImage.enabled = true;
 			LoadProfile(profile);
+			selectedStateImage.enabled = true;
 		});
 
 		deleteProfileButton.onClick.AddListener(() =>
@@ -36,5 +39,10 @@ public class CustomizationProfileTicket : BaseBehaviour
 	public void UnloadProfile()
 	{
 		selectedStateImage.enabled = false;
+	}
+
+	public bool HasThisProfile(CustomizationProfile profile)
+	{
+		return this.profile == profile;
 	}
 }

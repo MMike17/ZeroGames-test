@@ -26,8 +26,18 @@ public class GameManager : MonoBehaviour
 		);
 		playerInterface.Init();
 		recipePuppy.Init(recipeSearchUI.SetRecipes);
-		recipeSearchUI.Init(recipePuppy.StartRecipeRequest, () => playerInterface.canvasAnimator.Play(string.Format(playerInterface.hideMenuAnimationFormat, "Form"), 2));
-		customizationUI.Init(profilesManager.GetLocalProfiles(), profilesManager.hats, profilesManager.colors, profilesManager.gadgets);
+		recipeSearchUI.Init(
+			recipePuppy.StartRecipeRequest,
+			() => playerInterface.canvasAnimator.Play(string.Format(playerInterface.hideMenuAnimationFormat, "Form"), 2)
+		);
+		customizationUI.Init(
+			() => playerInterface.canvasAnimator.Play(string.Format(playerInterface.hideMenuAnimationFormat, "Cust"), 2),
+			profilesManager.GetLocalProfiles(),
+			profilesManager.hats,
+			profilesManager.colors,
+			profilesManager.gadgets,
+			0
+		);
 		profilesManager.Init();
 
 		// Uniques
