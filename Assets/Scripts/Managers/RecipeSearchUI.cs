@@ -13,7 +13,7 @@ public class RecipeSearchUI : BaseBehaviour
 	public TMP_InputField titleKeywordInputField;
 	public TMP_InputField ingredientInputField;
 	public TextMeshProUGUI pageNumberText;
-	public Button startSearchButton, previousPageButton, nextPageButton;
+	public Button startSearchButton, previousPageButton, nextPageButton, exitSearchButton;
 	public Transform ingredientsList, spinner;
 	public GameObject spinnerPanel;
 	public IngredientBubble ingredientPrefab;
@@ -23,7 +23,7 @@ public class RecipeSearchUI : BaseBehaviour
 	Action<string, string[], int> StartWebSearch;
 	int currentPage;
 
-	public void Init(Action<string, string[], int> startSearch)
+	public void Init(Action<string, string[], int> startSearch, Action ClosePanel)
 	{
 		StartWebSearch = startSearch;
 
@@ -52,6 +52,8 @@ public class RecipeSearchUI : BaseBehaviour
 			pageNumberText.text = currentPage.ToString();
 			StartSpinner();
 		});
+
+		exitSearchButton.onClick.AddListener(() => ClosePanel());
 
 		ingredientInputField.onSubmit.AddListener((ingredient) => SpawnIngredient(ingredient));
 		startSearchButton.onClick.AddListener(() => StartSearch());

@@ -24,7 +24,7 @@ public class GameManager : MonoBehaviour
 		);
 		playerInterface.Init();
 		recipePuppy.Init(recipeSearchUI.SetRecipes);
-		recipeSearchUI.Init(recipePuppy.StartRecipeRequest);
+		recipeSearchUI.Init(recipePuppy.StartRecipeRequest, () => playerInterface.canvasAnimator.Play(string.Format(playerInterface.hideMenuAnimationFormat, "Form"), 2));
 
 		// Uniques
 		mainCamera.Init(player.transform, player.SetPlayerDestination);
