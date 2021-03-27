@@ -19,7 +19,7 @@ public class RecipeSearchUI : BaseBehaviour
 	public IngredientBubble ingredientPrefab;
 	public List<RecipeDisplay> recipeDisplays;
 
-	public List<string> providedIngredients;
+	List<string> providedIngredients;
 	Action<string, string[], int> StartWebSearch;
 	int currentPage;
 

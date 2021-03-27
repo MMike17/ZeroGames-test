@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -11,6 +12,7 @@ public class RecipePuppyConnector : BaseBehaviour
 	public string keywordPrefix, ingredientsPrefix, pagePrefix;
 
 	Action<Recipe[]> OnResultsParsed;
+	RecipePuppyResultMap cachedResults;
 
 	public void Init(Action<Recipe[]> onResultsParsed)
 	{
@@ -24,10 +26,16 @@ public class RecipePuppyConnector : BaseBehaviour
 		if(!CheckInitialized())
 			return;
 
+		if(Application.internetReachability == NetworkReachability.NotReachable)
+		{
+			Debug.LogError(debugTag + "No internet connexion");
+			return;
+		}
+
 		string completeUrl = baseUrl;
 
 		// add ingredients
-		if(ingredients != null && !string.IsNullOrEmpty(ingredients[0]))
+		if(ingredients != null && ingredients.Length > 0 && !string.IsNullOrEmpty(ingredients[0]))
 		{
 			completeUrl += ingredientsPrefix;
 
@@ -55,22 +63,66 @@ public class RecipePuppyConnector : BaseBehaviour
 		UnityWebRequest request = UnityWebRequest.Get(completeUrl);
 		request.downloadHandler = new DownloadHandlerBuffer();
 
-		Debug.Log(debugTag + "Generated url : " + completeUrl);
-
 		StartCoroutine(ExecuteRecipeRequest(request));
 	}
 
 	IEnumerator ExecuteRecipeRequest(UnityWebRequest request)
 	{
 		yield return request.SendWebRequest();
+
+		if(request.result != UnityWebRequest.Result.Success)
+		{
+			RequestError(request.result);
+			yield break;
+		}
+
 		ParseResults(request.downloadHandler.text);
+		string[] thumbnailsUrls = GetThumbnailUrls();
+		List<Recipe> completeRecipes = new List<Recipe>();
+
+		for (int i = 0; i < thumbnailsUrls.Length; i++)
+		{
+			Texture2D downloadedTexture = null;
+
+			if(!string.IsNullOrEmpty(thumbnailsUrls[i]))
+			{
+				UnityWebRequest textureRequest = UnityWebRequestTexture.GetTexture(thumbnailsUrls[i]);
+				yield return textureRequest.SendWebRequest();
+
+				if(textureRequest.result != UnityWebRequest.Result.Success)
+				{
+					RequestError(textureRequest.result);
+					yield break;
+				}
+
+				downloadedTexture = DownloadHandlerTexture.GetContent(textureRequest);
+			}
+
+			completeRecipes.Add(new Recipe(cachedResults.results[i], downloadedTexture));
+		}
+
+		OnResultsParsed(completeRecipes.ToArray());
 
 		yield break;
 	}
 
 	void ParseResults(string json)
 	{
-		Debug.Log(debugTag + "Received data from api\n" + json);
-		// OnResultsParsed()
+		cachedResults = JsonUtility.FromJson<RecipePuppyResultMap>(json);
+	}
+
+	string[] GetThumbnailUrls()
+	{
+		List<string> urls = new List<string>();
+
+		foreach (RecipeMap recipeMap in cachedResults.results)
+			urls.Add(recipeMap.thumbnail);
+
+		return urls.ToArray();
+	}
+
+	void RequestError(UnityWebRequest.Result code)
+	{
+		Debug.LogError(debugTag + "Error sending web request : " + code.ToString());
 	}
 }

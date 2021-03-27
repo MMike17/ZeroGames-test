@@ -11,10 +11,10 @@ public class RecipeDisplay : BaseBehaviour
 
 	public void Init(Recipe recipe)
 	{
-		thumbnail.texture = recipe.thumbnail;
+		thumbnail.texture = recipe.thumbnailTexture;
 		title.text = recipe.title;
 
-		openWebSite.onClick.AddListener(() => Application.OpenURL(recipe.url));
+		openWebSite.onClick.AddListener(() => Application.OpenURL(recipe.recipeUrl));
 
 		InitInternal();
 	}
