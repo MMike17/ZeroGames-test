@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
 	public PlayerInterfaceManager playerInterface;
 	public RecipePuppyConnector recipePuppy;
 	public RecipeSearchUI recipeSearchUI;
+	public CustomizationUI customizationUI;
 
 	[Header("Scene references - Uniques")]
 	public CameraBehaviour mainCamera;
@@ -25,6 +26,7 @@ public class GameManager : MonoBehaviour
 		playerInterface.Init();
 		recipePuppy.Init(recipeSearchUI.SetRecipes);
 		recipeSearchUI.Init(recipePuppy.StartRecipeRequest, () => playerInterface.canvasAnimator.Play(string.Format(playerInterface.hideMenuAnimationFormat, "Form"), 2));
+		customizationUI.Init();
 
 		// Uniques
 		mainCamera.Init(player.transform, player.SetPlayerDestination);

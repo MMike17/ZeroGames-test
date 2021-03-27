@@ -8,9 +8,15 @@ public class CustomizationUI : BaseBehaviour
 	[Header("Scene references - UI")]
 	public TMP_InputField newProfileNameInputField;
 	public Button exitPanelButton, newProfileCreateButton;
+	public Image selectedProfileColorImage;
+	public TextMeshProUGUI selectedProfileNameText, selectedProfileHatText, selectedProfileGadgetText, selectedProfileHatPositionText, selectedProfileGadgetPositionText, selectedProfileColorPositionText;
+
+	int selectedProfile;
 
 	public void Init()
 	{
+		selectedProfile = 0;
+
 		newProfileCreateButton.onClick.AddListener(() =>
 		{
 			CreateCustomizationProfile();
@@ -27,5 +33,19 @@ public class CustomizationUI : BaseBehaviour
 			Debug.LogWarning(debugTag + "Profile name was empty, therefore profile was not created");
 			return;
 		}
+	}
+
+	void SelectProfile(int index)
+	{
+		// selectedProfileNameText.text = ;
+		// selectedProfileColorImage.color = ;
+		// selectedProfileHatText.text = ;
+		// selectedProfileGadgetText.text = ;
+
+		// selectedProfileHatPositionText.text = ;
+		// selectedProfileColorPositionText.text = ;
+		// selectedProfileGadgetPositionText.text = ;
+
+		selectedProfile = index;
 	}
 }
