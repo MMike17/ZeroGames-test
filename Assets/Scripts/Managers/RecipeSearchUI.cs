@@ -15,7 +15,7 @@ public class RecipeSearchUI : BaseBehaviour
 	public TextMeshProUGUI pageNumberText;
 	public Button startSearchButton, previousPageButton, nextPageButton, exitSearchButton;
 	public Transform ingredientsList, spinner;
-	public GameObject spinnerPanel;
+	public GameObject spinnerPanel, pageNavigationHolder;
 	public IngredientBubble ingredientPrefab;
 	public List<RecipeDisplay> recipeDisplays;
 
@@ -33,24 +33,30 @@ public class RecipeSearchUI : BaseBehaviour
 		recipeDisplays.ForEach(item => item.gameObject.SetActive(false));
 		previousPageButton.interactable = false;
 
+		pageNavigationHolder.SetActive(false);
+
 		previousPageButton.onClick.AddListener(() =>
 		{
 			currentPage--;
+
+			StartSpinner();
 			StartSearch();
 
 			previousPageButton.interactable = currentPage > 1;
 
 			pageNumberText.text = currentPage.ToString();
-			StartSpinner();
 		});
 
 		nextPageButton.onClick.AddListener(() =>
 		{
 			currentPage++;
+
+			StartSpinner();
 			StartSearch();
 
+			previousPageButton.interactable = currentPage > 1;
+
 			pageNumberText.text = currentPage.ToString();
-			StartSpinner();
 		});
 
 		exitSearchButton.onClick.AddListener(() => ClosePanel());
@@ -63,6 +69,8 @@ public class RecipeSearchUI : BaseBehaviour
 
 	public void SetRecipes(Recipe[] recipes)
 	{
+		ShowPageNavigation();
+
 		for (int i = 0; i < recipeDisplays.Count; i++)
 		{
 			if(i < recipes.Length)
@@ -112,5 +120,11 @@ public class RecipeSearchUI : BaseBehaviour
 	void StopSpinner()
 	{
 		spinnerPanel.SetActive(false);
+	}
+
+	void ShowPageNavigation()
+	{
+		pageNavigationHolder.SetActive(true);
+		pageNumberText.text = currentPage.ToString();
 	}
 }

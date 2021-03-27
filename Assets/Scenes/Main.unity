@@ -596,6 +596,7 @@ MonoBehaviour:
   ingredientsList: {fileID: 515494336}
   spinner: {fileID: 592757885}
   spinnerPanel: {fileID: 151961946}
+  pageNavigationHolder: {fileID: 1051267689}
   ingredientPrefab: {fileID: 8126002805808854523, guid: 16cd78637df11d242b65686909b65aff, type: 3}
   recipeDisplays:
   - {fileID: 668607087}
@@ -6907,7 +6908,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1641172827}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
+  m_Script: {fileID: 11500000, guid: f34b6c359c3cd0f4c8af2ac81d876dc1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_HorizontalAxis: Horizontal
