@@ -9,8 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c0d33fd6e71b6624897ea19c7e366e0a, type: 3}
-  m_Name: TestGadget
+  m_Script: {fileID: 11500000, guid: 29a86503619c02144b014f43fee22bcf, type: 3}
+  m_Name: TestColor 1
   m_EditorClassIdentifier: 
-  gadgetName: Test
-  gadgetPrefab: {fileID: 4344157256030259594, guid: 491ab0de94c68ae489fe977dbaa22ea0, type: 3}
+  color: {r: 1, g: 0, b: 0, a: 1}

@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: TestHat
   m_EditorClassIdentifier: 
   hatName: Test
-  hatPrefab: {fileID: 0}
+  hatPrefab: {fileID: 8131242380275976080, guid: 212fbf6d3f47ab046b0eaf5a3ff456b8, type: 3}

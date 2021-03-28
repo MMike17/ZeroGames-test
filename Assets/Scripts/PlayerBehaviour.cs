@@ -10,8 +10,10 @@ public class PlayerBehaviour : BaseBehaviour
 
 	[Header("Scene references")]
 	public Transform customizationCameraTarget;
+	public MeshRenderer playerRenderer;
 
 	NavMeshAgent aiAgent;
+	GameObject selectedHat, selectedColor, selectedGadget;
 
 	void OnDrawGizmos()
 	{
@@ -56,5 +58,24 @@ public class PlayerBehaviour : BaseBehaviour
 
 		if(detectedZone != null)
 			detectedZone.OnZoneExit();
+	}
+
+	public void GiveHat(GameObject prefab)
+	{
+		Destroy(selectedHat);
+
+		selectedHat = Instantiate(prefab, transform.position, transform.rotation, transform);
+	}
+
+	public void GiveColor(UnityEngine.Color color)
+	{
+		playerRenderer.material.color = color;
+	}
+
+	public void GiveGadget(GameObject prefab)
+	{
+		Destroy(selectedGadget);
+
+		selectedGadget = Instantiate(prefab, transform.position, transform.rotation, transform);
 	}
 }

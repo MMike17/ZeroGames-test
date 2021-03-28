@@ -20,16 +20,20 @@ public class CustomizationUI : BaseBehaviour
 
 	List<CustomizationProfileTicket> spawnedProfileTickets;
 	List<CustomizationProfile> customizationProfiles;
-	Hat[] selectableHats;
-	Color[] selectableColors;
-	Gadget[] selectableGadgets;
-	int selectedProfile;
+	Func<int, Hat> GiveHatToPlayer;
+	Func<int, Color> GiveColorToPlayer;
+	Func<int, Gadget> GiveGadgetToPlayer;
+	int selectedProfile, selectableHatsLength, selectableColorsLength, selectableGadgetsLength;
 
-	public void Init(Action ClosePanel, CustomizationProfile[] loadedProfiles, Hat[] selectableHats, Color[] selectableColors, Gadget[] selectedGadgets, int lastSelectedProfile)
+	public void Init(Action ClosePanel, Func<int, Hat> giveHatToPlayer, Func<int, Color> giveColorToPlayer, Func<int, Gadget> giveGadgetToPlayer, CustomizationProfile[] loadedProfiles, int lastSelectedProfile, int selectableHatsLength, int selectableColorsLength, int selectableGadgetsLength)
 	{
-		this.selectableHats = selectableHats;
-		this.selectableColors = selectableColors;
-		this.selectableGadgets = selectedGadgets;
+		GiveHatToPlayer = giveHatToPlayer;
+		GiveColorToPlayer = giveColorToPlayer;
+		GiveGadgetToPlayer = giveGadgetToPlayer;
+
+		this.selectableHatsLength = selectableHatsLength;
+		this.selectableColorsLength = selectableColorsLength;
+		this.selectableGadgetsLength = selectableGadgetsLength;
 
 		if(loadedProfiles != null)
 			customizationProfiles = new List<CustomizationProfile>(loadedProfiles);
@@ -54,40 +58,58 @@ public class CustomizationUI : BaseBehaviour
 
 		previousHatButton.onClick.AddListener(() =>
 		{
-			customizationProfiles[selectedProfile].hatIndex--;
-			// apply modification here
+			CustomizationProfile profile = customizationProfiles[selectedProfile];
+
+			profile.hatIndex--;
+			SetHat(profile.hatIndex);
+
 			CheckHatArrowsState();
 		});
 		nextHatButton.onClick.AddListener(() =>
 		{
-			customizationProfiles[selectedProfile].hatIndex++;
-			// apply modification here
+			CustomizationProfile profile = customizationProfiles[selectedProfile];
+
+			profile.hatIndex++;
+			SetHat(profile.hatIndex);
+
 			CheckHatArrowsState();
 		});
 
 		previousColorButton.onClick.AddListener(() =>
 		{
-			customizationProfiles[selectedProfile].colorIndex--;
-			// apply modification here
+			CustomizationProfile profile = customizationProfiles[selectedProfile];
+
+			profile.colorIndex--;
+			SetColor(profile.colorIndex);
+
 			CheckColorArrowsState();
 		});
 		nextColorButton.onClick.AddListener(() =>
 		{
-			customizationProfiles[selectedProfile].colorIndex++;
-			// apply modification here
+			CustomizationProfile profile = customizationProfiles[selectedProfile];
+
+			profile.colorIndex++;
+			SetColor(profile.colorIndex);
+
 			CheckColorArrowsState();
 		});
 
 		previousGadgetButton.onClick.AddListener(() =>
 		{
-			customizationProfiles[selectedProfile].gadgetIndex--;
-			// apply modification here
+			CustomizationProfile profile = customizationProfiles[selectedProfile];
+
+			profile.gadgetIndex--;
+			SetGadget(profile.gadgetIndex);
+
 			CheckGadgetArrowsState();
 		});
 		nextGadgetButton.onClick.AddListener(() =>
 		{
-			customizationProfiles[selectedProfile].gadgetIndex++;
-			// apply modification here
+			CustomizationProfile profile = customizationProfiles[selectedProfile];
+
+			profile.gadgetIndex++;
+			SetGadget(profile.gadgetIndex);
+
 			CheckGadgetArrowsState();
 		});
 
@@ -147,13 +169,9 @@ public class CustomizationUI : BaseBehaviour
 		CustomizationProfile profile = customizationProfiles[index];
 
 		selectedProfileNameText.text = profile.name;
-		selectedProfileHatText.text = selectableHats[profile.hatIndex].hatName;
-		selectedProfileColorImage.color = selectableColors[profile.colorIndex].color;
-		selectedProfileGadgetText.text = selectableGadgets[profile.gadgetIndex].gadgetName;
-
-		selectedProfileHatPositionText.text = string.Format(positionFormat, profile.hatIndex + 1, selectableColors.Length);
-		selectedProfileColorPositionText.text = string.Format(positionFormat, profile.colorIndex + 1, selectableHats.Length);
-		selectedProfileGadgetPositionText.text = string.Format(positionFormat, profile.gadgetIndex + 1, selectableGadgets.Length);
+		SetHat(profile.hatIndex);
+		SetColor(profile.colorIndex);
+		SetGadget(profile.gadgetIndex);
 
 		spawnedProfileTickets.ForEach(item =>
 		{
@@ -164,12 +182,39 @@ public class CustomizationUI : BaseBehaviour
 		selectedProfile = index;
 	}
 
+	void SetHat(int index)
+	{
+		Hat given = GiveHatToPlayer(index);
+		selectedProfileHatText.text = given.hatName;
+
+		customizationProfiles[selectedProfile].hatIndex = index;
+		selectedProfileHatPositionText.text = string.Format(positionFormat, index + 1, selectableColorsLength);
+	}
+
+	void SetColor(int index)
+	{
+		Color given = GiveColorToPlayer(index);
+		selectedProfileColorImage.color = given.color;
+
+		customizationProfiles[selectedProfile].colorIndex = index;
+		selectedProfileColorPositionText.text = string.Format(positionFormat, index + 1, selectableHatsLength);
+	}
+
+	void SetGadget(int index)
+	{
+		Gadget given = GiveGadgetToPlayer(index);
+		selectedProfileGadgetText.text = given.gadgetName;
+
+		customizationProfiles[selectedProfile].gadgetIndex = index;
+		selectedProfileGadgetPositionText.text = string.Format(positionFormat, index + 1, selectableGadgetsLength);
+	}
+
 	void CheckHatArrowsState()
 	{
 		CustomizationProfile modifiableProfile = customizationProfiles[selectedProfile];
 
 		previousHatButton.interactable = modifiableProfile.hatIndex > 0;
-		nextHatButton.interactable = modifiableProfile.hatIndex < selectableHats.Length - 1;
+		nextHatButton.interactable = modifiableProfile.hatIndex < selectableHatsLength - 1;
 	}
 
 	void CheckColorArrowsState()
@@ -177,7 +222,7 @@ public class CustomizationUI : BaseBehaviour
 		CustomizationProfile modifiableProfile = customizationProfiles[selectedProfile];
 
 		previousColorButton.interactable = modifiableProfile.colorIndex > 0;
-		nextColorButton.interactable = modifiableProfile.colorIndex < selectableColors.Length - 1;
+		nextColorButton.interactable = modifiableProfile.colorIndex < selectableColorsLength - 1;
 	}
 
 	void CheckGadgetArrowsState()
@@ -185,6 +230,6 @@ public class CustomizationUI : BaseBehaviour
 		CustomizationProfile modifiableProfile = customizationProfiles[selectedProfile];
 
 		previousGadgetButton.interactable = modifiableProfile.gadgetIndex > 0;
-		nextGadgetButton.interactable = modifiableProfile.gadgetIndex < selectableGadgets.Length - 1;
+		nextGadgetButton.interactable = modifiableProfile.gadgetIndex < selectableGadgetsLength - 1;
 	}
 }
