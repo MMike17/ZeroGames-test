@@ -9,7 +9,7 @@ public static class FileManager
 
 	public static void SaveFile<T>(T objectToSave, string fileName)
 	{
-		string filePath = Path.Combine(localPath, fileName);
+		string filePath = GetFilePath(fileName);
 
 		if(Directory.Exists(localPath))
 			Directory.CreateDirectory(localPath);
@@ -17,12 +17,12 @@ public static class FileManager
 		string jsonData = JsonUtility.ToJson(objectToSave, true);
 		File.WriteAllText(filePath, jsonData);
 
-		Debug.Log(debugTag + "File fo type " + objectToSave.GetType() + " has been saved as Json to " + filePath);
+		Debug.Log(debugTag + "File of type " + objectToSave.GetType() + " has been saved as Json to " + filePath);
 	}
 
 	public static T LoadFile<T>(string fileName)
 	{
-		string filePath = Path.Combine(localPath, fileName);
+		string filePath = GetFilePath(fileName);
 		string jsonData = null;
 
 		if(File.Exists(filePath))
@@ -30,11 +30,29 @@ public static class FileManager
 
 		if(jsonData == null)
 		{
-			Debug.LogError(debugTag + "File with name \"" + fileName + "\" was not found");
+			Debug.LogWarning(debugTag + "File with name \"" + fileName + "\" was not found");
 			return default(T);
 		}
 
 		T loadedObject = JsonUtility.FromJson<T>(jsonData);
 		return loadedObject;
+	}
+
+	public static void DeleteFile(string fileName)
+	{
+		string filePath = GetFilePath(fileName);
+
+		if(File.Exists(filePath))
+		{
+			File.Delete(filePath);
+			Debug.Log(debugTag + "File with name \"" + fileName + "\" was deleted");
+		}
+		else
+			Debug.Log(debugTag + "File with name \"" + fileName + "\" was not found");
+	}
+
+	static string GetFilePath(string fileName)
+	{
+		return Path.Combine(localPath, fileName);
 	}
 }

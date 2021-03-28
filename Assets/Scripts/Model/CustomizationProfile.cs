@@ -1,6 +1,3 @@
-using System;
-
-[Serializable]
 public class CustomizationProfile
 {
 	public string name;

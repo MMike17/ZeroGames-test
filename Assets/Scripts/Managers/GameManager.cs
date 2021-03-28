@@ -42,7 +42,7 @@ public class GameManager : MonoBehaviour
 			profilesManager.ApplyColorToPlayer,
 			profilesManager.ApplyGadgetToPlayer,
 			profilesManager.GetLocalProfiles(),
-			0,
+			profilesManager.GetSelectedProfile(),
 			profilesManager.hats.Length,
 			profilesManager.colors.Length,
 			profilesManager.gadgets.Length
@@ -55,6 +55,6 @@ public class GameManager : MonoBehaviour
 
 	void OnApplicationQuit()
 	{
-		profilesManager.SaveCustomizationprofiles(customizationUI.GetCurrentProfiles());
+		profilesManager.SaveCustomizationprofiles(customizationUI.GetCurrentProfiles(), customizationUI.GetSelectedProfile());
 	}
 }

@@ -38,7 +38,7 @@ public class CustomizationUI : BaseBehaviour
 		customizationProfiles = new List<CustomizationProfile>(loadedProfiles);
 
 		spawnedProfileTickets = new List<CustomizationProfileTicket>();
-		selectedProfile = 0;
+		selectedProfile = lastSelectedProfile;
 
 		customizationProfiles.ForEach(item => SpawnProfileTicket(item));
 
@@ -135,8 +135,18 @@ public class CustomizationUI : BaseBehaviour
 			},
 			(profile, ticket) =>
 			{
-				spawnedProfileTickets.Remove(ticket);
-				customizationProfiles.Remove(profile);
+				if(spawnedProfileTickets.Count > 1)
+				{
+					if(selectedProfile > 0)
+						SelectProfile(selectedProfile - 1);
+
+					spawnedProfileTickets.Remove(ticket);
+					customizationProfiles.Remove(profile);
+
+					return true;
+				}
+				else
+					return false;
 			},
 			selectedProfile == profileTicket.transform.GetSiblingIndex()
 		);
@@ -154,6 +164,8 @@ public class CustomizationUI : BaseBehaviour
 
 		CustomizationProfile createdProfile = new CustomizationProfile(newProfileNameInputField.text);
 		customizationProfiles.Add(createdProfile);
+
+		SelectProfile(customizationProfiles.Count - 1);
 
 		SpawnProfileTicket(createdProfile);
 	}
@@ -173,6 +185,8 @@ public class CustomizationUI : BaseBehaviour
 		{
 			if(!item.HasThisProfile(profile))
 				item.UnloadProfile();
+			else
+				item.selectedStateImage.enabled = true;
 		});
 
 		CheckHatArrowsState();
@@ -234,5 +248,10 @@ public class CustomizationUI : BaseBehaviour
 	public CustomizationProfile[] GetCurrentProfiles()
 	{
 		return customizationProfiles.ToArray();
+	}
+
+	public int GetSelectedProfile()
+	{
+		return selectedProfile;
 	}
 }

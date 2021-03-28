@@ -15,7 +15,7 @@ public class CustomizationProfileTicket : BaseBehaviour
 
 	CustomizationProfile profile;
 
-	public void Init(CustomizationProfile profile, Action<CustomizationProfile> LoadProfile, Action<CustomizationProfile, CustomizationProfileTicket> DeleteProfile, bool isInitialSelected)
+	public void Init(CustomizationProfile profile, Action<CustomizationProfile> LoadProfile, Func<CustomizationProfile, CustomizationProfileTicket, bool> DeleteProfile, bool isInitialSelected)
 	{
 		selectedStateImage.enabled = isInitialSelected;
 		profileNameText.text = profile.name;
@@ -29,8 +29,10 @@ public class CustomizationProfileTicket : BaseBehaviour
 
 		deleteProfileButton.onClick.AddListener(() =>
 		{
-			DeleteProfile(profile, this);
-			Destroy(gameObject);
+			bool shouldDestroy = DeleteProfile(profile, this);
+
+			if(shouldDestroy)
+				Destroy(gameObject);
 		});
 
 		InitInternal();
