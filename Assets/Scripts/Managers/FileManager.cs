@@ -7,12 +7,13 @@ public static class FileManager
 	static string localPath => Application.persistentDataPath;
 	static string debugTag => "<b>[FileManager] : </b>";
 
-	public static void SaveFile<T>(T objectToSave, string fileName)
+	public static void SaveFile<T>(T objectToSave, string fileName, string folderName = null)
 	{
-		string filePath = GetFilePath(fileName);
+		string folderPath = folderName != null ? Path.Combine(localPath, folderName) : localPath;
+		string filePath = GetFilePath(fileName, folderName);
 
-		if(Directory.Exists(localPath))
-			Directory.CreateDirectory(localPath);
+		if(!Directory.Exists(folderPath))
+			Directory.CreateDirectory(folderPath);
 
 		string jsonData = JsonUtility.ToJson(objectToSave, true);
 		File.WriteAllText(filePath, jsonData);
@@ -20,9 +21,9 @@ public static class FileManager
 		Debug.Log(debugTag + "File of type " + objectToSave.GetType() + " has been saved as Json to " + filePath);
 	}
 
-	public static T LoadFile<T>(string fileName)
+	public static T LoadFile<T>(string fileName, string folderName = null)
 	{
-		string filePath = GetFilePath(fileName);
+		string filePath = GetFilePath(fileName, folderName);
 		string jsonData = null;
 
 		if(File.Exists(filePath))
@@ -38,9 +39,9 @@ public static class FileManager
 		return loadedObject;
 	}
 
-	public static void DeleteFile(string fileName)
+	public static void DeleteFile(string fileName, string folderName = null)
 	{
-		string filePath = GetFilePath(fileName);
+		string filePath = GetFilePath(fileName, folderName);
 
 		if(File.Exists(filePath))
 		{
@@ -51,8 +52,11 @@ public static class FileManager
 			Debug.Log(debugTag + "File with name \"" + fileName + "\" was not found");
 	}
 
-	static string GetFilePath(string fileName)
+	static string GetFilePath(string fileName, string folderName = null)
 	{
-		return Path.Combine(localPath, fileName);
+		if(folderName != null)
+			return Path.Combine(localPath, folderName, fileName);
+		else
+			return Path.Combine(localPath, fileName);
 	}
 }

@@ -5,6 +5,7 @@ public class CustomizableProfilesManager : BaseBehaviour
 {
 	const string FILE_LIST_NAME = "ProfileNames";
 	const string PLAYER_PREFERENCES_FILE_NAME = "PlayerPreferences";
+	const string PROFILE_FOLDER_NAME = "Profiles";
 
 	[Header("Settings")]
 	public Hat[] hats;
@@ -27,7 +28,7 @@ public class CustomizableProfilesManager : BaseBehaviour
 			loadedProfiles = new CustomizationProfile[profileList.profilesNames.Length];
 
 			for (int i = 0; i < profileList.profilesNames.Length; i++)
-				loadedProfiles[i] = FileManager.LoadFile<CustomizationProfile>(profileList.profilesNames[i]);
+				loadedProfiles[i] = FileManager.LoadFile<CustomizationProfile>(profileList.profilesNames[i], PROFILE_FOLDER_NAME);
 		}
 		else // first time we play
 		{
@@ -81,7 +82,7 @@ public class CustomizableProfilesManager : BaseBehaviour
 		FileManager.SaveFile(profileList, FILE_LIST_NAME + CustomizationProfilesList.FILE_TYPE);
 
 		for (int i = 0; i < profiles.Length; i++)
-			FileManager.SaveFile(profiles[i], profileList.profilesNames[i]);
+			FileManager.SaveFile(profiles[i], profileList.profilesNames[i], PROFILE_FOLDER_NAME);
 
 		preferences.selectedProfileIndex = selectedProfileIndex;
 		FileManager.SaveFile(preferences, PLAYER_PREFERENCES_FILE_NAME + CustomizationProfilesList.FILE_TYPE);
@@ -105,6 +106,6 @@ public class CustomizableProfilesManager : BaseBehaviour
 		CustomizationProfilesList toDeleteNames = new CustomizationProfilesList(toDelete.ToArray());
 
 		foreach (string fileName in toDeleteNames.profilesNames)
-			FileManager.DeleteFile(fileName);
+			FileManager.DeleteFile(fileName, PROFILE_FOLDER_NAME);
 	}
 }
