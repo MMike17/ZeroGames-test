@@ -19,7 +19,7 @@ public class CustomizationUI : BaseBehaviour
 	public CustomizationProfileTicket profileTicketprefab;
 
 	List<CustomizationProfileTicket> spawnedProfileTickets;
-	List<CustomizationProfile> customizationProfiles;
+	public List<CustomizationProfile> customizationProfiles;
 	Func<int, Hat> GiveHatToPlayer;
 	Func<int, Color> GiveColorToPlayer;
 	Func<int, Gadget> GiveGadgetToPlayer;
@@ -35,13 +35,7 @@ public class CustomizationUI : BaseBehaviour
 		this.selectableColorsLength = selectableColorsLength;
 		this.selectableGadgetsLength = selectableGadgetsLength;
 
-		if(loadedProfiles != null)
-			customizationProfiles = new List<CustomizationProfile>(loadedProfiles);
-		else
-		{
-			customizationProfiles = new List<CustomizationProfile>();
-			customizationProfiles.Add(new CustomizationProfile("Default"));
-		}
+		customizationProfiles = new List<CustomizationProfile>(loadedProfiles);
 
 		spawnedProfileTickets = new List<CustomizationProfileTicket>();
 		selectedProfile = 0;
@@ -166,6 +160,8 @@ public class CustomizationUI : BaseBehaviour
 
 	void SelectProfile(int index)
 	{
+		selectedProfile = index;
+
 		CustomizationProfile profile = customizationProfiles[index];
 
 		selectedProfileNameText.text = profile.name;
@@ -179,7 +175,9 @@ public class CustomizationUI : BaseBehaviour
 				item.UnloadProfile();
 		});
 
-		selectedProfile = index;
+		CheckHatArrowsState();
+		CheckColorArrowsState();
+		CheckGadgetArrowsState();
 	}
 
 	void SetHat(int index)
@@ -231,5 +229,10 @@ public class CustomizationUI : BaseBehaviour
 
 		previousGadgetButton.interactable = modifiableProfile.gadgetIndex > 0;
 		nextGadgetButton.interactable = modifiableProfile.gadgetIndex < selectableGadgetsLength - 1;
+	}
+
+	public CustomizationProfile[] GetCurrentProfiles()
+	{
+		return customizationProfiles.ToArray();
 	}
 }

@@ -52,4 +52,9 @@ public class GameManager : MonoBehaviour
 		mainCamera.Init(player.transform, player.customizationCameraTarget, player.SetPlayerDestination);
 		player.Init();
 	}
+
+	void OnApplicationQuit()
+	{
+		profilesManager.SaveCustomizationprofiles(customizationUI.GetCurrentProfiles());
+	}
 }
