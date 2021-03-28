@@ -8,7 +8,19 @@ public class PlayerBehaviour : BaseBehaviour
 	[Header("Settings")]
 	public float maxNavDistanceThreshold = 1;
 
+	[Header("Scene references")]
+	public Transform customizationCameraTarget;
+
 	NavMeshAgent aiAgent;
+
+	void OnDrawGizmos()
+	{
+		if(customizationCameraTarget != null)
+		{
+			Gizmos.color = new UnityEngine.Color(1, 0.5f, 0, 0.5f);
+			Gizmos.DrawSphere(customizationCameraTarget.position, 0.3f);
+		}
+	}
 
 	public void Init()
 	{

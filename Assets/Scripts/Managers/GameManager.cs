@@ -24,14 +24,18 @@ public class GameManager : MonoBehaviour
 			playerInterface.ShowZonePrompt,
 			playerInterface.HideZonePrompt
 		);
-		playerInterface.Init();
+		playerInterface.Init(mainCamera.StartCustomization);
 		recipePuppy.Init(recipeSearchUI.SetRecipes);
 		recipeSearchUI.Init(
 			recipePuppy.StartRecipeRequest,
 			() => playerInterface.canvasAnimator.Play(string.Format(playerInterface.hideMenuAnimationFormat, "Form"), 2)
 		);
 		customizationUI.Init(
-			() => playerInterface.canvasAnimator.Play(string.Format(playerInterface.hideMenuAnimationFormat, "Cust"), 2),
+			() =>
+			{
+				playerInterface.canvasAnimator.Play(string.Format(playerInterface.hideMenuAnimationFormat, "Cust"), 2);
+				mainCamera.StopCustomization();
+			},
 			profilesManager.GetLocalProfiles(),
 			profilesManager.hats,
 			profilesManager.colors,
@@ -41,7 +45,7 @@ public class GameManager : MonoBehaviour
 		profilesManager.Init();
 
 		// Uniques
-		mainCamera.Init(player.transform, player.SetPlayerDestination);
+		mainCamera.Init(player.transform, player.customizationCameraTarget, player.SetPlayerDestination);
 		player.Init();
 	}
 }
