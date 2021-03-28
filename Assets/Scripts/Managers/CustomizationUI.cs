@@ -162,6 +162,16 @@ public class CustomizationUI : BaseBehaviour
 			return;
 		}
 
+		foreach (CustomizationProfile profile in customizationProfiles)
+		{
+			// if new profile name is the same as profile that already exists
+			if(profile.name == newProfileNameInputField.text)
+			{
+				Debug.LogWarning(debugTag + "Can't create new profile with the same name as an already existing profile");
+				return;
+			}
+		}
+
 		CustomizationProfile createdProfile = new CustomizationProfile(newProfileNameInputField.text);
 		customizationProfiles.Add(createdProfile);
 
