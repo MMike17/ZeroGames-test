@@ -2,14 +2,17 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-[RequireComponent(typeof(Camera))]
+[RequireComponent(typeof(Animator))]
 public class CameraBehaviour : BaseBehaviour
 {
 	[Header("Settings")]
 	public float cameraSpeed;
 	public float fallOffDistanceThreshold, cameraFocusTransitionDuration;
 
-	Camera mainCamera;
+	[Header("Scene references")]
+	public Camera mainCamera;
+
+	Animator animator;
 	Transform target, customizationTarget;
 	Action<Vector3> SetPlayerDestination;
 	Quaternion initialRotation;
@@ -18,7 +21,7 @@ public class CameraBehaviour : BaseBehaviour
 
 	public void Init(Transform cameraTarget, Transform cameraCustomizationTarget, Action<Vector3> setPlayerDestination)
 	{
-		mainCamera = GetComponent<Camera>();
+		animator = GetComponent<Animator>();
 
 		target = cameraTarget;
 		customizationTarget = cameraCustomizationTarget;
@@ -52,6 +55,8 @@ public class CameraBehaviour : BaseBehaviour
 
 			float positionStep = distanceToTarget / cameraFocusTransitionDuration;
 			float rotationStep = angleToTarget / cameraFocusTransitionDuration;
+
+			animator.Play("Customization");
 
 			startedCustomization = true;
 
@@ -126,5 +131,7 @@ public class CameraBehaviour : BaseBehaviour
 	{
 		isInCustomization = false;
 		startedCustomization = false;
+
+		animator.Play("Idle");
 	}
 }
