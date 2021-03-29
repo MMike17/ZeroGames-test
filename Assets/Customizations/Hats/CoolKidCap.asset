@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3a074dab9fa0cea4ba5000ea0534e820, type: 3}
-  m_Name: TestHat
+  m_Name: CoolKidCap
   m_EditorClassIdentifier: 
-  hatName: Test
-  hatPrefab: {fileID: 8131242380275976080, guid: 212fbf6d3f47ab046b0eaf5a3ff456b8, type: 3}
+  hatName: Cool kid cap
+  hatPrefab: {fileID: 275451458684668918, guid: f4dd262358623ba43aa1421475ecaabd, type: 3}

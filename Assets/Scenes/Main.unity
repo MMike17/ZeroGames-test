@@ -3329,7 +3329,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4cacb101feb401941a9af951ee96d5ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraSpeed: 3
+  cameraSpeed: 5
   fallOffDistanceThreshold: 2
   cameraFocusTransitionDuration: 1
   mainCamera: {fileID: 963194227}
@@ -4347,7 +4347,7 @@ Light:
   serializedVersion: 10
   m_Type: 1
   m_Shape: 0
-  m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
+  m_Color: {r: 1, g: 0.94634145, b: 0.8, a: 1}
   m_Intensity: 1
   m_Range: 10
   m_SpotAngle: 30
@@ -8610,6 +8610,9 @@ MonoBehaviour:
   hats:
   - {fileID: 11400000, guid: f13539b38b3da9b41be8eb6f9d006034, type: 2}
   - {fileID: 11400000, guid: 09d7d2536f14b1849b0c0d23af62a88e, type: 2}
+  - {fileID: 11400000, guid: acadf81052853744ea4f5b620a74b54b, type: 2}
+  - {fileID: 11400000, guid: d17c5f079c8525b4389730acaad48fb3, type: 2}
+  - {fileID: 11400000, guid: 2bbee501469bfa74a9264353223b20ec, type: 2}
   colors:
   - {fileID: 11400000, guid: 9702a1ac8d68ff04d8a0d2a7641dfc93, type: 2}
   - {fileID: 11400000, guid: a4c5f4523e859a14a95b0a6b9705df90, type: 2}
