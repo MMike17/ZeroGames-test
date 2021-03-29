@@ -8612,7 +8612,11 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 09d7d2536f14b1849b0c0d23af62a88e, type: 2}
   colors:
   - {fileID: 11400000, guid: 9702a1ac8d68ff04d8a0d2a7641dfc93, type: 2}
-  - {fileID: 11400000, guid: 420fed9c358778647b04b16a3c74d00e, type: 2}
+  - {fileID: 11400000, guid: a4c5f4523e859a14a95b0a6b9705df90, type: 2}
+  - {fileID: 11400000, guid: 0ff0dab9b1ff0fa4f9f8092bdf94549f, type: 2}
+  - {fileID: 11400000, guid: 26987b6313640824c92d267d1c860590, type: 2}
+  - {fileID: 11400000, guid: 08693d92b15dfde45a81716cdf51c7ca, type: 2}
+  - {fileID: 11400000, guid: 005f376507baa494b8177dbca0ff6cf4, type: 2}
   gadgets:
   - {fileID: 11400000, guid: 6c47a1da374bb2b4e9826f5885ecb8d2, type: 2}
   - {fileID: 11400000, guid: 3deda06b45fc25949b322dee10e359f8, type: 2}
