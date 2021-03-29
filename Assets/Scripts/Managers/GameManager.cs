@@ -7,7 +7,10 @@ public class GameManager : MonoBehaviour
 	public ZonesManager zonesManager;
 	public PlayerInterfaceManager playerInterface;
 	public RecipePuppyConnector recipePuppy;
+	public CustomizableProfilesManager profilesManager;
+	[Space]
 	public RecipeSearchUI recipeSearchUI;
+	public CustomizationUI customizationUI;
 
 	[Header("Scene references - Uniques")]
 	public CameraBehaviour mainCamera;
@@ -22,12 +25,36 @@ public class GameManager : MonoBehaviour
 			playerInterface.ShowZonePrompt,
 			playerInterface.HideZonePrompt
 		);
-		playerInterface.Init();
+		playerInterface.Init(mainCamera.StartCustomization);
 		recipePuppy.Init(recipeSearchUI.SetRecipes);
-		recipeSearchUI.Init(recipePuppy.StartRecipeRequest, () => playerInterface.canvasAnimator.Play(string.Format(playerInterface.hideMenuAnimationFormat, "Form"), 2));
+		recipeSearchUI.Init(
+			recipePuppy.StartRecipeRequest,
+			() => playerInterface.canvasAnimator.Play(string.Format(playerInterface.hideMenuAnimationFormat, "Form"), 2)
+		);
+		profilesManager.Init(player);
+		customizationUI.Init(
+			() =>
+			{
+				playerInterface.canvasAnimator.Play(string.Format(playerInterface.hideMenuAnimationFormat, "Cust"), 2);
+				mainCamera.StopCustomization();
+			},
+			profilesManager.ApplyHatToPlayer,
+			profilesManager.ApplyColorToPlayer,
+			profilesManager.ApplyGadgetToPlayer,
+			profilesManager.GetLocalProfiles(),
+			profilesManager.GetSelectedProfile(),
+			profilesManager.hats.Length,
+			profilesManager.colors.Length,
+			profilesManager.gadgets.Length
+		);
 
 		// Uniques
-		mainCamera.Init(player.transform, player.SetPlayerDestination);
+		mainCamera.Init(player.transform, player.customizationCameraTarget, player.SetPlayerDestination);
 		player.Init();
+	}
+
+	void OnApplicationQuit()
+	{
+		profilesManager.SaveCustomizationprofiles(customizationUI.GetCurrentProfiles(), customizationUI.GetSelectedProfile());
 	}
 }

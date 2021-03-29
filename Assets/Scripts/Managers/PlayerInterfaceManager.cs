@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,8 +15,12 @@ public class PlayerInterfaceManager : BaseBehaviour
 	public TextMeshProUGUI zoneTitleText, zonePromptText;
 	public Button zonePromptButton;
 
-	public void Init()
+	Action FocusCamera;
+
+	public void Init(Action focusCamera)
 	{
+		FocusCamera = focusCamera;
+
 		InitInternal();
 	}
 
@@ -43,7 +48,13 @@ public class PlayerInterfaceManager : BaseBehaviour
 
 		zonePromptText.text = buttonPrompt;
 
-		zonePromptButton.onClick.AddListener(() => canvasAnimator.Play(string.Format(showMenuAnimationFormat, zoneAnimationTag), 2));
+		zonePromptButton.onClick.AddListener(() =>
+		{
+			canvasAnimator.Play(string.Format(showMenuAnimationFormat, zoneAnimationTag), 2);
+
+			if(zoneAnimationTag == "Cust")
+				FocusCamera();
+		});
 
 		canvasAnimator.Play("ShowPrompt", 1);
 	}
