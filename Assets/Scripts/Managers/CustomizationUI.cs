@@ -210,7 +210,7 @@ public class CustomizationUI : BaseBehaviour
 		selectedProfileHatText.text = given.hatName;
 
 		customizationProfiles[selectedProfile].hatIndex = index;
-		selectedProfileHatPositionText.text = string.Format(positionFormat, index + 1, selectableColorsLength);
+		selectedProfileHatPositionText.text = string.Format(positionFormat, index + 1, selectableHatsLength);
 	}
 
 	void SetColor(int index)
@@ -219,7 +219,7 @@ public class CustomizationUI : BaseBehaviour
 		selectedProfileColorImage.color = given.color;
 
 		customizationProfiles[selectedProfile].colorIndex = index;
-		selectedProfileColorPositionText.text = string.Format(positionFormat, index + 1, selectableHatsLength);
+		selectedProfileColorPositionText.text = string.Format(positionFormat, index + 1, selectableColorsLength);
 	}
 
 	void SetGadget(int index)

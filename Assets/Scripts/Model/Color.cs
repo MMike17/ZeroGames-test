@@ -3,5 +3,5 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Color", menuName = "ZeroGamesTest/Color")]
 public class Color : ScriptableObject
 {
-	public UnityEngine.Color color;
+	public UnityEngine.Color color = UnityEngine.Color.white;
 }
