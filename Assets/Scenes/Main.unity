@@ -8623,6 +8623,8 @@ MonoBehaviour:
   gadgets:
   - {fileID: 11400000, guid: 6c47a1da374bb2b4e9826f5885ecb8d2, type: 2}
   - {fileID: 11400000, guid: 3deda06b45fc25949b322dee10e359f8, type: 2}
+  - {fileID: 11400000, guid: 4bfd173ecff4b504287323d722613503, type: 2}
+  - {fileID: 11400000, guid: 79226c009691a4149907858f3d2c02be, type: 2}
 --- !u!1 &1338203981
 GameObject:
   m_ObjectHideFlags: 0
