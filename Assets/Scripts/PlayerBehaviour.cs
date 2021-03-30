@@ -14,6 +14,7 @@ public class PlayerBehaviour : BaseBehaviour
 
 	NavMeshAgent aiAgent;
 	GameObject selectedHat, selectedColor, selectedGadget;
+	bool blockDestination;
 
 	void OnDrawGizmos()
 	{
@@ -33,7 +34,7 @@ public class PlayerBehaviour : BaseBehaviour
 
 	public void SetPlayerDestination(Vector3 targetPos)
 	{
-		if(!CheckInitialized())
+		if(!CheckInitialized() || blockDestination)
 			return;
 
 		NavMeshHit navMeshHit;
@@ -77,5 +78,15 @@ public class PlayerBehaviour : BaseBehaviour
 		Destroy(selectedGadget);
 
 		selectedGadget = Instantiate(prefab, transform.position, transform.rotation, transform);
+	}
+
+	public void BlockDestination()
+	{
+		blockDestination = true;
+	}
+
+	public void AllowDestination()
+	{
+		blockDestination = false;
 	}
 }

@@ -19,7 +19,7 @@ public class CustomizationUI : BaseBehaviour
 	public CustomizationProfileTicket profileTicketprefab;
 
 	List<CustomizationProfileTicket> spawnedProfileTickets;
-	public List<CustomizationProfile> customizationProfiles;
+	List<CustomizationProfile> customizationProfiles;
 	Func<int, Hat> GiveHatToPlayer;
 	Func<int, Color> GiveColorToPlayer;
 	Func<int, Gadget> GiveGadgetToPlayer;

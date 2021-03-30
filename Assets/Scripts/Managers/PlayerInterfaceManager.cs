@@ -15,11 +15,12 @@ public class PlayerInterfaceManager : BaseBehaviour
 	public TextMeshProUGUI zoneTitleText, zonePromptText;
 	public Button zonePromptButton;
 
-	Action FocusCamera;
+	Action FocusCamera, BlockPlayer;
 
-	public void Init(Action focusCamera)
+	public void Init(Action focusCamera, Action blockPlayer)
 	{
 		FocusCamera = focusCamera;
+		BlockPlayer = blockPlayer;
 
 		InitInternal();
 	}
@@ -50,6 +51,7 @@ public class PlayerInterfaceManager : BaseBehaviour
 
 		zonePromptButton.onClick.AddListener(() =>
 		{
+			BlockPlayer();
 			canvasAnimator.Play(string.Format(showMenuAnimationFormat, zoneAnimationTag), 2);
 
 			if(zoneAnimationTag == "Cust")
