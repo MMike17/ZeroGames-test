@@ -40,7 +40,6 @@ public class RecipeSearchUI : BaseBehaviour
 		{
 			currentPage--;
 
-			StartSpinner();
 			StartSearch();
 
 			previousPageButton.interactable = currentPage > 1;
@@ -52,7 +51,6 @@ public class RecipeSearchUI : BaseBehaviour
 		{
 			currentPage++;
 
-			StartSpinner();
 			StartSearch();
 
 			previousPageButton.interactable = currentPage > 1;
@@ -110,6 +108,7 @@ public class RecipeSearchUI : BaseBehaviour
 		if(!CheckInitialized())
 			return;
 
+		StartSpinner();
 		StartWebSearch(titleKeywordInputField.text, providedIngredients.ToArray(), currentPage);
 	}
 
