@@ -55,7 +55,7 @@ public class GameManager : MonoBehaviour
 
 		// Uniques
 		mainCamera.Init(player.transform, player.customizationCameraTarget, player.SetPlayerDestination);
-		player.Init();
+		player.Init(mainCamera.transform);
 	}
 
 	void OnApplicationQuit()

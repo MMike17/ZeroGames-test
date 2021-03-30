@@ -9,8 +9,9 @@ public class PlayerBehaviour : BaseBehaviour
 	public float maxNavDistanceThreshold = 1;
 
 	[Header("Scene references")]
-	public Transform customizationCameraTarget;
 	public MeshRenderer playerRenderer;
+	public Transform customizationCameraTarget;
+	public TargetIndicator indicator;
 
 	NavMeshAgent aiAgent;
 	GameObject selectedHat, selectedColor, selectedGadget;
@@ -25,9 +26,10 @@ public class PlayerBehaviour : BaseBehaviour
 		}
 	}
 
-	public void Init()
+	public void Init(Transform mainCamera)
 	{
 		aiAgent = GetComponent<NavMeshAgent>();
+		indicator.Init(mainCamera, transform);
 
 		InitInternal();
 	}
@@ -40,7 +42,10 @@ public class PlayerBehaviour : BaseBehaviour
 		NavMeshHit navMeshHit;
 
 		if(NavMesh.SamplePosition(targetPos, out navMeshHit, maxNavDistanceThreshold, 1))
+		{
 			aiAgent.SetDestination(navMeshHit.position);
+			indicator.transform.position = targetPos;
+		}
 		else
 			Debug.LogWarning(debugTag + "Couldn't find NavMesh point close to target position within distance");
 	}
