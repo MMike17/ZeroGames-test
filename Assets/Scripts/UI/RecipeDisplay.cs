@@ -5,6 +5,9 @@ using UnityEngine.UI;
 /// <summary>Class used to display recipes</summary>
 public class RecipeDisplay : BaseBehaviour
 {
+	[Header("Settings")]
+	public int recipeTitleCharacterLimit;
+
 	[Header("Scene references - UI")]
 	public RawImage thumbnail;
 	public TextMeshProUGUI title;
@@ -13,7 +16,13 @@ public class RecipeDisplay : BaseBehaviour
 	public void Init(Recipe recipe)
 	{
 		thumbnail.texture = recipe.thumbnailTexture;
-		title.text = recipe.title;
+
+		string recipeTitle = recipe.title.Trim('\n', '\r', ' ').Replace("&nbsp", "");
+
+		if(recipeTitle.Length > recipeTitleCharacterLimit)
+			recipeTitle = recipeTitle.Substring(0, recipeTitleCharacterLimit - 4) + "...";
+
+		title.text = recipeTitle;
 
 		openWebSite.onClick.AddListener(() => Application.OpenURL(recipe.recipeUrl));
 
