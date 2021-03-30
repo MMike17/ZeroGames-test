@@ -24,6 +24,7 @@ public class RecipeDisplay : BaseBehaviour
 
 		title.text = recipeTitle;
 
+		openWebSite.onClick.RemoveAllListeners();
 		openWebSite.onClick.AddListener(() => Application.OpenURL(recipe.recipeUrl));
 
 		InitInternal();
