@@ -1,3 +1,4 @@
+/// <summary>Class used to create, modify and save customization profiles localy</summary>
 public class CustomizationProfile
 {
 	public string name;

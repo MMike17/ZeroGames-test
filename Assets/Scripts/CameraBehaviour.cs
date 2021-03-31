@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>Class managing interractive camera movement</summary>
 [RequireComponent(typeof(Animator))]
 public class CameraBehaviour : BaseBehaviour
 {

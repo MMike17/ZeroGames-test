@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>Class used to store scriptable objects for customization and manage customization profiles</summary>
 public class CustomizableProfilesManager : BaseBehaviour
 {
 	const string FILE_LIST_NAME = "ProfileNames";
