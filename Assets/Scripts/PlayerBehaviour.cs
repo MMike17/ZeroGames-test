@@ -94,4 +94,9 @@ public class PlayerBehaviour : BaseBehaviour
 	{
 		blockDestination = false;
 	}
+
+	public float GetPlayerSpeed()
+	{
+		return aiAgent.speed;
+	}
 }

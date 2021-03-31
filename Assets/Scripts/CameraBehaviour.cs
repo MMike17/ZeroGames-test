@@ -7,8 +7,8 @@ using UnityEngine;
 public class CameraBehaviour : BaseBehaviour
 {
 	[Header("Settings")]
-	public float cameraSpeed;
-	public float fallOffDistanceThreshold, cameraFocusTransitionDuration;
+	public float fallOffDistanceThreshold;
+	public float cameraFocusTransitionDuration;
 
 	[Header("Scene references")]
 	public Camera mainCamera;
@@ -19,12 +19,14 @@ public class CameraBehaviour : BaseBehaviour
 	Action<Vector3> SetPlayerDestination;
 	Quaternion initialRotation;
 	Vector3 targetOffset;
+	float cameraSpeed;
 	bool isInCustomization, startedCustomization;
 
-	public void Init(Transform cameraTarget, Transform cameraCustomizationTarget, Action<Vector3> setPlayerDestination)
+	public void Init(float playerSpeed, Transform cameraTarget, Transform cameraCustomizationTarget, Action<Vector3> setPlayerDestination)
 	{
 		animator = GetComponent<Animator>();
 
+		cameraSpeed = playerSpeed;
 		target = cameraTarget;
 		customizationTarget = cameraCustomizationTarget;
 		SetPlayerDestination = setPlayerDestination;

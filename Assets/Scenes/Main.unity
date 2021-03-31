@@ -3455,7 +3455,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4cacb101feb401941a9af951ee96d5ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraSpeed: 5
   fallOffDistanceThreshold: 2
   cameraFocusTransitionDuration: 1
   mainCamera: {fileID: 963194227}

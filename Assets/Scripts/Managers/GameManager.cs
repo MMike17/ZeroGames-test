@@ -51,8 +51,8 @@ public class GameManager : MonoBehaviour
 		);
 
 		// Uniques
-		mainCamera.Init(player.transform, player.customizationCameraTarget, player.SetPlayerDestination);
 		player.Init(mainCamera.transform);
+		mainCamera.Init(player.GetPlayerSpeed(), player.transform, player.customizationCameraTarget, player.SetPlayerDestination);
 	}
 
 	void SubscribeEvents()
