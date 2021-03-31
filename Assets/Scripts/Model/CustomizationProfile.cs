@@ -13,4 +13,13 @@ public class CustomizationProfile
 		colorIndex = 0;
 		gadgetIndex = 0;
 	}
+
+	public CustomizationProfile(string name, CustomizationProfile original)
+	{
+		this.name = name;
+
+		hatIndex = original.hatIndex;
+		colorIndex = original.colorIndex;
+		gadgetIndex = original.gadgetIndex;
+	}
 }

@@ -1,64 +1,82 @@
 using System;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using static PlayerInterfaceManager.GameMenu;
 
 /// <summary>Class used to controll the player interface and transitions between panels</summary>
 public class PlayerInterfaceManager : BaseBehaviour
 {
 	[Header("Settings")]
-	public string showMenuAnimationFormat;
-	public string hideMenuAnimationFormat;
+	public List<GameMenu> gameMenus;
 
 	[Header("Scene references - UI")]
 	public Animator canvasAnimator;
 	public TextMeshProUGUI zoneTitleText, zonePromptText;
 	public Button zonePromptButton;
 
-	Action FocusCamera, BlockPlayer;
+	Action BlockPlayer, AllowPlayer;
 
-	public void Init(Action focusCamera, Action blockPlayer)
+	public void Init(Action blockPlayer, Action allowPlayer)
 	{
-		FocusCamera = focusCamera;
 		BlockPlayer = blockPlayer;
+		AllowPlayer = allowPlayer;
 
 		InitInternal();
 	}
 
-	public void ShowZoneTitle(string title)
+	public void SubscribeOpenMenuEvent(MenuTag tag, Action callback)
 	{
 		if(!CheckInitialized())
 			return;
 
-		zoneTitleText.text = title;
-		canvasAnimator.Play("ShowTitle", 0);
+		GameMenu selectedMenu = SelectGameMenu(tag);
+
+		if(selectedMenu == null)
+			return;
+
+		int index = gameMenus.IndexOf(selectedMenu);
+		gameMenus[index].SubscribeOnOpenEvent(callback);
 	}
 
-	public void HideZoneTitle()
+	public void SubscribeCloseMenuEvent(MenuTag tag, Action callback)
 	{
 		if(!CheckInitialized())
 			return;
 
-		canvasAnimator.Play("HideTitle", 0);
+		GameMenu selectedMenu = SelectGameMenu(tag);
+
+		if(selectedMenu == null)
+			return;
+
+		int index = gameMenus.IndexOf(selectedMenu);
+		gameMenus[index].SubscribeOnCloseEvent(callback);
 	}
 
-	public void ShowZonePrompt(string zoneAnimationTag, string buttonPrompt)
+	public void SetZoneData(MenuTag tag)
 	{
 		if(!CheckInitialized())
 			return;
 
-		zonePromptText.text = buttonPrompt;
+		GameMenu selectedMenu = SelectGameMenu(tag);
 
-		zonePromptButton.onClick.AddListener(() =>
-		{
-			BlockPlayer();
-			canvasAnimator.Play(string.Format(showMenuAnimationFormat, zoneAnimationTag), 2);
+		if(selectedMenu == null)
+			return;
 
-			if(zoneAnimationTag == "Cust")
-				FocusCamera();
-		});
+		zoneTitleText.text = selectedMenu.title;
+		zonePromptText.text = selectedMenu.buttonPrompt;
 
-		canvasAnimator.Play("ShowPrompt", 1);
+		zonePromptButton.onClick.RemoveAllListeners();
+		zonePromptButton.onClick.AddListener(() => ShowMenu(tag));
+	}
+
+	public void ShowZonePrompt()
+	{
+		if(!CheckInitialized())
+			return;
+
+		canvasAnimator.Play("ShowPrompt", 0);
 	}
 
 	public void HideZonePrompt()
@@ -66,8 +84,91 @@ public class PlayerInterfaceManager : BaseBehaviour
 		if(!CheckInitialized())
 			return;
 
-		zonePromptButton.onClick.RemoveAllListeners();
+		canvasAnimator.Play("HidePrompt", 0);
+	}
 
-		canvasAnimator.Play("HidePrompt", 1);
+	public void HideMenu(MenuTag menuTag)
+	{
+		if(!CheckInitialized())
+			return;
+
+		GameMenu selectedMenu = SelectGameMenu(menuTag);
+
+		if(selectedMenu == null)
+			return;
+
+		canvasAnimator.Play("ShowPrompt", 0);
+		canvasAnimator.Play(selectedMenu.closePanelAnimName, 1);
+
+		selectedMenu.OnPanelClose();
+		AllowPlayer();
+	}
+
+	void ShowMenu(MenuTag menuTag)
+	{
+		if(!CheckInitialized())
+			return;
+
+		GameMenu selectedMenu = SelectGameMenu(menuTag);
+
+		if(selectedMenu == null)
+			return;
+
+		canvasAnimator.Play("HidePrompt", 0);
+		canvasAnimator.Play(selectedMenu.openPanelAnimName, 1);
+
+		selectedMenu.OnPanelOpen();
+		BlockPlayer();
+	}
+
+	GameMenu SelectGameMenu(MenuTag menuTag)
+	{
+		GameMenu selectedMenu = gameMenus.Find(item => item.menuTag == menuTag);
+
+		if(selectedMenu == null)
+		{
+			Debug.LogError(debugTag + "Couldn't find game menu with tag " + menuTag);
+			return null;
+		}
+
+		return selectedMenu;
+	}
+
+	[Serializable]
+	public class GameMenu
+	{
+		public MenuTag menuTag;
+		public string title, buttonPrompt, openPanelAnimName, closePanelAnimName;
+		public Action onPanelOpen, onPanelClose;
+
+		public enum MenuTag
+		{
+			CUSTOMIZATION,
+			RECIPE_SEARCH
+		}
+
+		public void SubscribeOnOpenEvent(Action callback)
+		{
+			if(callback != null)
+				onPanelOpen += callback;
+		}
+
+		public void SubscribeOnCloseEvent(Action callback)
+		{
+			if(callback != null)
+				onPanelClose += callback;
+		}
+
+		public void OnPanelOpen()
+		{
+			if(onPanelOpen != null)
+				onPanelOpen();
+		}
+
+		public void OnPanelClose()
+		{
+			if(onPanelClose != null)
+				onPanelClose();
+		}
 	}
 }
