@@ -156,15 +156,16 @@ public class CustomizationUI : BaseBehaviour
 
 	void CreateCustomizationProfile()
 	{
+		// if new profile name is empty
 		if(string.IsNullOrEmpty(newProfileNameInputField.text))
 		{
 			Debug.LogWarning(debugTag + "Profile name was empty, therefore profile was not created");
 			return;
 		}
 
+		// if new profile name is the same as profile that already exists
 		foreach (CustomizationProfile profile in customizationProfiles)
 		{
-			// if new profile name is the same as profile that already exists
 			if(profile.name == newProfileNameInputField.text)
 			{
 				Debug.LogWarning(debugTag + "Can't create new profile with the same name as an already existing profile");
@@ -172,7 +173,7 @@ public class CustomizationUI : BaseBehaviour
 			}
 		}
 
-		CustomizationProfile createdProfile = new CustomizationProfile(newProfileNameInputField.text);
+		CustomizationProfile createdProfile = new CustomizationProfile(newProfileNameInputField.text, customizationProfiles[selectedProfile]);
 		customizationProfiles.Add(createdProfile);
 
 		SelectProfile(customizationProfiles.Count - 1);
