@@ -1,27 +1,22 @@
 using System;
 using UnityEngine;
+using static PlayerInterfaceManager.GameMenu;
 
 /// <summary>Class used to setup zones and link them to their respective interface panels</summary>
 [RequireComponent(typeof(BoxCollider))]
 public class Zone : BaseBehaviour, IInterractableZone
 {
 	[Header("Settings")]
-	public string zoneTitle;
-	public string zoneAnimationTag, zoneInterractionPrompt;
+	public MenuTag menuTag;
 
-	Action<string, string> ShowZonePrompt;
-	Action<string> ShowZoneTitle;
-	Action HideZoneTitle, HideZonePrompt;
-	bool hasVisitor;
+	Action<MenuTag> SetZonePrompt;
+	Action ShowZonePrompt, HideZonePrompt;
 
-	public void Init(Action<string> showZoneTitle, Action hideZoneTitle, Action<string, string> showZonePrompt, Action hideZonePrompt)
+	public void Init(Action<MenuTag> setZonePrompt, Action showZonePrompt, Action hideZonePrompt)
 	{
-		ShowZoneTitle = showZoneTitle;
-		HideZoneTitle = hideZoneTitle;
+		SetZonePrompt = setZonePrompt;
 		ShowZonePrompt = showZonePrompt;
 		HideZonePrompt = hideZonePrompt;
-
-		hasVisitor = false;
 
 		InitInternal();
 	}
@@ -31,9 +26,8 @@ public class Zone : BaseBehaviour, IInterractableZone
 		if(!CheckInitialized())
 			return;
 
-		ShowZoneTitle(zoneTitle);
-		ShowZonePrompt(zoneAnimationTag, zoneInterractionPrompt);
-		hasVisitor = true;
+		SetZonePrompt(menuTag);
+		ShowZonePrompt();
 	}
 
 	public void OnZoneExit()
@@ -41,8 +35,6 @@ public class Zone : BaseBehaviour, IInterractableZone
 		if(!CheckInitialized())
 			return;
 
-		HideZoneTitle();
 		HideZonePrompt();
-		hasVisitor = false;
 	}
 }

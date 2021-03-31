@@ -1,4 +1,5 @@
 using UnityEngine;
+using static PlayerInterfaceManager.GameMenu;
 
 /// <summary>Class used to setup execution pipeline and controll other managers and uniques</summary>
 public class GameManager : MonoBehaviour
@@ -18,31 +19,27 @@ public class GameManager : MonoBehaviour
 
 	void Awake()
 	{
+		InitializeComponent();
+		SubscribeEvents();
+	}
+
+	void InitializeComponent()
+	{
 		// Managers
 		zonesManager.Init(
-			playerInterface.ShowZoneTitle,
-			playerInterface.HideZoneTitle,
+			playerInterface.SetZoneData,
 			playerInterface.ShowZonePrompt,
 			playerInterface.HideZonePrompt
 		);
-		playerInterface.Init(mainCamera.StartCustomization, player.BlockDestination);
+		playerInterface.Init(player.BlockDestination, player.AllowDestination);
 		recipePuppy.Init(recipeSearchUI.SetRecipes);
 		recipeSearchUI.Init(
 			recipePuppy.StartRecipeRequest,
-			() =>
-			{
-				player.AllowDestination();
-				playerInterface.canvasAnimator.Play(string.Format(playerInterface.hideMenuAnimationFormat, "Form"), 2);
-			}
+			() => playerInterface.HideMenu(MenuTag.RECIPE_SEARCH)
 		);
 		profilesManager.Init(player);
 		customizationUI.Init(
-			() =>
-			{
-				playerInterface.canvasAnimator.Play(string.Format(playerInterface.hideMenuAnimationFormat, "Cust"), 2);
-				mainCamera.StopCustomization();
-				player.AllowDestination();
-			},
+			() => playerInterface.HideMenu(MenuTag.CUSTOMIZATION),
 			profilesManager.ApplyHatToPlayer,
 			profilesManager.ApplyColorToPlayer,
 			profilesManager.ApplyGadgetToPlayer,
@@ -56,6 +53,12 @@ public class GameManager : MonoBehaviour
 		// Uniques
 		mainCamera.Init(player.transform, player.customizationCameraTarget, player.SetPlayerDestination);
 		player.Init(mainCamera.transform);
+	}
+
+	void SubscribeEvents()
+	{
+		playerInterface.SubscribeOpenMenuEvent(MenuTag.CUSTOMIZATION, () => mainCamera.StartCustomization());
+		playerInterface.SubscribeCloseMenuEvent(MenuTag.CUSTOMIZATION, () => mainCamera.StopCustomization());
 	}
 
 	void OnApplicationQuit()

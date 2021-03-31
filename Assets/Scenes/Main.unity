@@ -472,8 +472,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb214de38a2c9834e8fd2ed086856519, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  showMenuAnimationFormat: Show{0}Panel
-  hideMenuAnimationFormat: Hide{0}Panel
+  gameMenus:
+  - menuTag: 0
+    title: Customization
+    buttonPrompt: Customize my character
+    openPanelAnimName: ShowCustPanel
+    closePanelAnimName: HideCustPanel
+  - menuTag: 1
+    title: Recipe search
+    buttonPrompt: Search a recipe
+    openPanelAnimName: ShowFormPanel
+    closePanelAnimName: HideFormPanel
   canvasAnimator: {fileID: 23550943}
   zoneTitleText: {fileID: 1553858146}
   zonePromptText: {fileID: 1355880646}
@@ -3780,9 +3789,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abd389e100da24b4fbb711d20494b95d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  zoneTitle: Recipe search
-  zoneAnimationTag: Form
-  zoneInterractionPrompt: Search a recipe
+  menuTag: 1
 --- !u!1 &619677964
 GameObject:
   m_ObjectHideFlags: 0
@@ -12591,9 +12598,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abd389e100da24b4fbb711d20494b95d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  zoneTitle: Customization
-  zoneAnimationTag: Cust
-  zoneInterractionPrompt: Start customization
+  menuTag: 0
 --- !u!1 &1857379881
 GameObject:
   m_ObjectHideFlags: 0
