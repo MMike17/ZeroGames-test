@@ -56,7 +56,10 @@ public class RecipePuppyConnector : BaseBehaviour
 
 		// cancel request if settings are empty
 		if(completeUrl == baseUrl)
+		{
 			OnResultsParsed(null);
+			return;
+		}
 
 		completeUrl += "&" + pagePrefix + pageNumber;
 
@@ -73,6 +76,7 @@ public class RecipePuppyConnector : BaseBehaviour
 		if(request.result != UnityWebRequest.Result.Success)
 		{
 			RequestError(request.result);
+			OnResultsParsed(null);
 			yield break;
 		}
 
@@ -123,6 +127,6 @@ public class RecipePuppyConnector : BaseBehaviour
 
 	void RequestError(UnityWebRequest.Result code)
 	{
-		Debug.LogError(debugTag + "Error sending web request : " + code.ToString());
+		Debug.LogWarning(debugTag + "Error sending web request : " + code.ToString());
 	}
 }
