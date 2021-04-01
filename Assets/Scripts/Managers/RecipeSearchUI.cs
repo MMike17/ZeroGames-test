@@ -14,7 +14,7 @@ public class RecipeSearchUI : BaseBehaviour
 	public TMP_InputField titleKeywordInputField;
 	public TMP_InputField ingredientInputField;
 	public TextMeshProUGUI pageNumberText, errorMessageText;
-	public Button startSearchButton, previousPageButton, nextPageButton, exitSearchButton;
+	public Button addIngredientButton, startSearchButton, previousPageButton, nextPageButton, exitSearchButton;
 	public Transform ingredientsList, spinner;
 	public GameObject spinnerPanel, pageNavigationHolder;
 	public IngredientBubble ingredientPrefab;
@@ -36,6 +36,8 @@ public class RecipeSearchUI : BaseBehaviour
 
 		errorMessageText.enabled = false;
 		pageNavigationHolder.SetActive(false);
+
+		addIngredientButton.onClick.AddListener(() => SpawnIngredient(ingredientInputField.text));
 
 		previousPageButton.onClick.AddListener(() =>
 		{

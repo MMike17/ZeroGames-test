@@ -17,7 +17,7 @@ public class RecipeDisplay : BaseBehaviour
 	{
 		thumbnail.texture = recipe.thumbnailTexture;
 
-		string recipeTitle = recipe.title.Trim('\n', '\r', ' ').Replace("&nbsp", "");
+		string recipeTitle = recipe.title.Trim('\n', '\r', '\t', ' ').Replace("&nbsp", " ");
 
 		if(recipeTitle.Length > recipeTitleCharacterLimit)
 			recipeTitle = recipeTitle.Substring(0, recipeTitleCharacterLimit - 4) + "...";
