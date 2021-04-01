@@ -42,10 +42,7 @@ public class RecipeSearchUI : BaseBehaviour
 			currentPage--;
 
 			StartSearch();
-
-			previousPageButton.interactable = currentPage > 1;
-
-			pageNumberText.text = currentPage.ToString();
+			UpdateArrows();
 		});
 
 		nextPageButton.onClick.AddListener(() =>
@@ -53,22 +50,27 @@ public class RecipeSearchUI : BaseBehaviour
 			currentPage++;
 
 			StartSearch();
-
-			previousPageButton.interactable = currentPage > 1;
-
-			pageNumberText.text = currentPage.ToString();
+			UpdateArrows();
 		});
 
 		exitSearchButton.onClick.AddListener(() => ClosePanel());
 
 		ingredientInputField.onSubmit.AddListener((ingredient) => SpawnIngredient(ingredient));
-		startSearchButton.onClick.AddListener(() => StartSearch());
+		startSearchButton.onClick.AddListener(() =>
+		{
+			currentPage = 1;
+			UpdateArrows();
+			StartSearch();
+		});
 
 		InitInternal();
 	}
 
 	public void SetRecipes(Recipe[] recipes)
 	{
+		if(!CheckInitialized())
+			return;
+
 		// did not receive any info from server (error)
 		if(recipes == null)
 		{
@@ -118,11 +120,15 @@ public class RecipeSearchUI : BaseBehaviour
 
 	void StartSearch()
 	{
-		if(!CheckInitialized())
-			return;
-
 		StartSpinner();
 		StartWebSearch(titleKeywordInputField.text, providedIngredients.ToArray(), currentPage);
+	}
+
+	void UpdateArrows()
+	{
+		previousPageButton.interactable = currentPage > 1;
+
+		pageNumberText.text = currentPage.ToString();
 	}
 
 	void StartSpinner()
