@@ -13,7 +13,7 @@ public class RecipeSearchUI : BaseBehaviour
 	[Header("Scene references - UI")]
 	public TMP_InputField titleKeywordInputField;
 	public TMP_InputField ingredientInputField;
-	public TextMeshProUGUI pageNumberText;
+	public TextMeshProUGUI pageNumberText, errorMessageText;
 	public Button startSearchButton, previousPageButton, nextPageButton, exitSearchButton;
 	public Transform ingredientsList, spinner;
 	public GameObject spinnerPanel, pageNavigationHolder;
@@ -34,6 +34,7 @@ public class RecipeSearchUI : BaseBehaviour
 		recipeDisplays.ForEach(item => item.gameObject.SetActive(false));
 		previousPageButton.interactable = false;
 
+		errorMessageText.enabled = false;
 		pageNavigationHolder.SetActive(false);
 
 		previousPageButton.onClick.AddListener(() =>
@@ -68,19 +69,31 @@ public class RecipeSearchUI : BaseBehaviour
 
 	public void SetRecipes(Recipe[] recipes)
 	{
-		ShowPageNavigation();
-
-		for (int i = 0; i < recipeDisplays.Count; i++)
+		// did not receive any info from server (error)
+		if(recipes == null)
 		{
-			if(i < recipes.Length)
+			errorMessageText.enabled = true;
+			recipeDisplays.ForEach(item => item.gameObject.SetActive(false));
+			nextPageButton.interactable = false;
+		}
+		else
+		{
+			nextPageButton.interactable = true;
+			errorMessageText.enabled = false;
+
+			for (int i = 0; i < recipeDisplays.Count; i++)
 			{
-				recipeDisplays[i].gameObject.SetActive(true);
-				recipeDisplays[i].Init(recipes[i]);
+				if(i < recipes.Length)
+				{
+					recipeDisplays[i].gameObject.SetActive(true);
+					recipeDisplays[i].Init(recipes[i]);
+				}
+				else
+					recipeDisplays[i].gameObject.SetActive(false);
 			}
-			else
-				recipeDisplays[i].gameObject.SetActive(false);
 		}
 
+		ShowPageNavigation();
 		StopSpinner();
 	}
 
